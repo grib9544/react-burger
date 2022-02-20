@@ -1,11 +1,10 @@
 
-import React from 'react';
 import { AppHeader } from '../app-header'
 import styles from './app.module.css'
 import { BurgerIngredients } from '../burger-ingredients';
+import { BurgerConstructor } from '../burger-constructor';
 
 export const App = () => {
-
   return (
     <>
       <AppHeader />
@@ -14,10 +13,8 @@ export const App = () => {
           		Соберите бургер
        		</h1>
         	<div className={styles.main__content}>
-				<BurgerIngredients />
-          		<div className={styles.main__tab2}>
-            		lol
-          		</div>
+				      <BurgerIngredients />
+          		<BurgerConstructor />
         	</div>
       </main>
     </>

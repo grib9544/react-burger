@@ -29,9 +29,8 @@ export const BurgerIngredients = () => {
                 </h2>
                 <ul className={styles.ingredients__list}>
                     {data.filter(ing => ing.type === 'bun').map(ing => (
-                        <li>
-                            <IngredientCard 
-                                key={ing._id} 
+                        <li key={ing._id}>
+                            <IngredientCard  
                                 img={ing.image} 
                                 price={ing.price} 
                                 title={ing.name} 
@@ -44,9 +43,8 @@ export const BurgerIngredients = () => {
                 </h2>
                 <ul className={styles.ingredients__list}>
                     {data.filter(ing => ing.type === 'sauce').map(ing => (
-                        <li>
-                            <IngredientCard 
-                                key={ing._id} 
+                        <li key={ing._id}>
+                            <IngredientCard  
                                 img={ing.image} 
                                 price={ing.price} 
                                 title={ing.name} 
@@ -59,9 +57,8 @@ export const BurgerIngredients = () => {
                 </h2>
                 <ul className={styles.ingredients__list}>
                     {data.filter(ing => ing.type === 'main').map(ing => (
-                        <li>
+                        <li key={ing._id}>
                             <IngredientCard 
-                                key={ing._id} 
                                 img={ing.image} 
                                 price={ing.price} 
                                 title={ing.name} 

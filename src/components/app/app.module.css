@@ -5,9 +5,9 @@
 }
 
 .main__content {
-  display: flex;
-  gap: 40px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
 }
 
 .main__tab2 {

@@ -1,0 +1,41 @@
+.constructor {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.constructor__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.constructor__scrollable {
+  display: flex;
+  max-height: 400px;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: scroll;
+}
+
+.constructor__order {
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.price > svg {
+  width: auto;
+  height: 60%;
+}
