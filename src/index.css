@@ -12,10 +12,15 @@
   font-weight: 700;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
   display: flex;
+  max-height: 100vh;
   flex-direction: column;
   font-family: "JetBrains Mono", sans-serif;
   background-color: "#131316";

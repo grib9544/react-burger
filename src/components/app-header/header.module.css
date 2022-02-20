@@ -12,7 +12,7 @@
 }
 
 .main_nav__list {
-  width: 35%;
+  min-width: 35%;
   display: flex;
   gap: 8px;
 }
@@ -27,5 +27,7 @@
 
 .main_nav__logo {
   display: flex;
-  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 30%;
 }
