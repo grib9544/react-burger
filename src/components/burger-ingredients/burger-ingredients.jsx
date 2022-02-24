@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './burger-ingredients.module.css'
-import { IngredientCard } from './ingredient-card'
+import { IngredientCard } from './ingredient-card/ingredient-card'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import data from '../../utils/data.json'
 

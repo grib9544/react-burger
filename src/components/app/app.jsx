@@ -1,8 +1,8 @@
 
-import { AppHeader } from '../app-header'
+import { AppHeader } from '../app-header/header'
 import styles from './app.module.css'
-import { BurgerIngredients } from '../burger-ingredients';
-import { BurgerConstructor } from '../burger-constructor';
+import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
+import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 
 export const App = () => {
   return (
