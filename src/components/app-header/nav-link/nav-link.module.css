@@ -1,0 +1,15 @@
+.nav_link {
+  display: inline-block;
+  padding: 20px;
+  color: #8585ad;
+}
+
+.nav_link_active {
+  composes: nav_link;
+  color: #f2f2f3;
+}
+
+.nav_link__logo {
+  vertical-align: middle;
+  margin-right: 8px;
+}

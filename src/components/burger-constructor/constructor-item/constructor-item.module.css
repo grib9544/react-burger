@@ -1,0 +1,13 @@
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item__icon {
+  cursor: pointer;
+}
+
+.item__element {
+  margin-left: auto;
+}

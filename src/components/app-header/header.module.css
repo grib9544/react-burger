@@ -1,0 +1,33 @@
+.main_header {
+  margin-bottom: 40px;
+  background-color: #1c1c21;
+}
+
+.main_nav {
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 0;
+}
+
+.main_nav__list {
+  min-width: 35%;
+  display: flex;
+  gap: 8px;
+}
+
+.main_nav__list--left {
+  justify-content: flex-start;
+}
+
+.main_nav__list--right {
+  justify-content: flex-end;
+}
+
+.main_nav__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30%;
+}

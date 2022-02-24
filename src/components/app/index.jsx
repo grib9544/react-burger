@@ -1,24 +1,23 @@
-import styles from './app.module.css'
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
-function App() {
+import { AppHeader } from '../app-header'
+import styles from './app.module.css'
+import { BurgerIngredients } from '../burger-ingredients';
+import { BurgerConstructor } from '../burger-constructor';
+
+export const App = () => {
   return (
-    <div className={styles['App']}>
-      <header className={styles['App-header']}>
-        <Button>
-          Hello World!
-        </Button>
-        <a
-          className={styles['App-link']}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AppHeader />
+      <main className={styles.main}>
+        	<h1 className="text text_type_main-large mb-5">
+          		Соберите бургер
+       		</h1>
+        	<div className={styles.main__content}>
+				      <BurgerIngredients />
+          		<BurgerConstructor />
+        	</div>
+      </main>
+    </>
   );
 }
 
-export default App;
