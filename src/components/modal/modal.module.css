@@ -1,0 +1,24 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 40px 0px 40px;
+  background-color: #131316;
+  border: 1px solid rgba(76, 76, 255, 0.2);
+  border-radius: 40px;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__header > svg {
+  cursor: pointer;
+}
+
+.modal__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
