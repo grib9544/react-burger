@@ -2,7 +2,7 @@ import styles from './ingredient-card.module.css'
 import PropTypes from 'prop-types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-export const IngredientCard = ({ img, price, title}) => {
+export const IngredientCard = ({ img, price, title }) => {
     return (
         <div className={styles.ingredient}>
             <img src={img} alt={title} className={styles.ingredient__img} />
