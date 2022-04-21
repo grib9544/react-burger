@@ -1,26 +1,10 @@
-import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal-overlay.module.css';
-import { useKeyPress } from '../../hooks';
 import PropTypes from 'prop-types';
 
-export const ModalOverlay = ({ children,  mountNode }) => {
-    const onEscPress = useKeyPress('Escape')
-
-    const [isVisible, setVisability] = React.useState(true)
-
-    useEffect(() => {
-        if (onEscPress) {
-            setVisability(false)
-        }
-    }, [onEscPress])
+export const ModalOverlay = ({ visible, onClick, children,  mountNode }) => {
     
-
-    const onClick = (event) => {
-        event.currentTarget === event.target && setVisability(false)
-    }
-    
-    const className = `${styles.overlay} ${isVisible ? styles.overlay__flex : styles.overlay__none}`
+    const className = `${styles.overlay} ${visible ? styles.overlay__flex : styles.overlay__none}`
 
     return (
         ReactDOM.createPortal(
@@ -35,10 +19,13 @@ export const ModalOverlay = ({ children,  mountNode }) => {
 }
 
 ModalOverlay.defaultProps = {
+    visible: false,
     mountNode: document.getElementById('root'),
 }
 
 ModalOverlay.propTypes = {
+    visible: PropTypes.bool,
+    onClick: PropTypes.func,
     mountNode: PropTypes.instanceOf(HTMLElement),
     children: PropTypes.node.isRequired
 }
