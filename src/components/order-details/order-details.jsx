@@ -1,6 +1,6 @@
 import styles from './order-details.module.css';
 import { Modal } from '../modal/modal';
-import doneSvg from '../assets/done.svg'
+import doneSvg from '../../assets/done.svg';
 
 export const OrderDetails = () => {
     return (
