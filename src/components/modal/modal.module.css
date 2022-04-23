@@ -1,7 +1,7 @@
 .modal {
   display: flex;
   flex-direction: column;
-  padding: 40px 40px 0px 40px;
+  padding: 60px 40px 0px 40px;
   background-color: #131316;
   border: 1px solid rgba(76, 76, 255, 0.2);
   border-radius: 40px;
@@ -19,6 +19,8 @@
 
 .modal__content {
   display: flex;
+  padding: 0px 60px;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
