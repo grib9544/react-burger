@@ -1,32 +1,18 @@
-import ReactDOM from 'react-dom';
 import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-export const ModalOverlay = ({ visible, onClick, children,  mountNode }) => {
-    
-    const className = `${styles.overlay} ${visible ? styles.overlay__flex : styles.overlay__none}`
-
+export const ModalOverlay = ({ onClick, children }) => {
     return (
-        ReactDOM.createPortal(
-            <div className={className} onClick={onClick}>
-                <div className={styles.overlay__content}>
-                    {children}
-                </div>
-            </div>,
-            mountNode
-        )
+        <div className={`${styles.overlay} ${styles.overlay__flex}`} onClick={onClick}>
+            <div className={styles.overlay__content}>
+                {children}
+            </div>
+        </div>
     )
 }
 
-ModalOverlay.defaultProps = {
-    visible: false,
-    mountNode: document.getElementById('root'),
-}
-
 ModalOverlay.propTypes = {
-    visible: PropTypes.bool,
     onClick: PropTypes.func,
-    mountNode: PropTypes.instanceOf(HTMLElement),
     children: PropTypes.node.isRequired
 }
 

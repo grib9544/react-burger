@@ -14,7 +14,3 @@
 .overlay__flex {
   display: flex;
 }
-
-.overlay__none {
-  display: none;
-}

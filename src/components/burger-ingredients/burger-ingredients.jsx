@@ -30,11 +30,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                 <ul className={styles.ingredients__list}>
                     {ingredients.filter(ing => ing.type === 'bun').map(ing => (
                         <li key={ing._id}>
-                            <IngredientCard  
-                                img={ing.image} 
-                                price={ing.price} 
-                                title={ing.name} 
-                            />
+                            <IngredientCard  {...ing} />    
                         </li>
                     ))}
                 </ul>
@@ -44,11 +40,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                 <ul className={styles.ingredients__list}>
                     {ingredients.filter(ing => ing.type === 'sauce').map(ing => (
                         <li key={ing._id}>
-                            <IngredientCard  
-                                img={ing.image} 
-                                price={ing.price} 
-                                title={ing.name} 
-                            />
+                            <IngredientCard  {...ing} />
                         </li>
                     ))}
                 </ul>
@@ -58,11 +50,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                 <ul className={styles.ingredients__list}>
                     {ingredients.filter(ing => ing.type === 'main').map(ing => (
                         <li key={ing._id}>
-                            <IngredientCard 
-                                img={ing.image} 
-                                price={ing.price} 
-                                title={ing.name} 
-                            />
+                            <IngredientCard {...ing} />
                         </li>
                     ))}
                 </ul>

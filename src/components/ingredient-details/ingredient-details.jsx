@@ -4,7 +4,7 @@ import styles from './ingredient-details.module.css';
 
 export const IngredientDetails = (props) => {
     return (
-        <Modal title="Детали ингредиента">
+        <Modal title="Детали ингредиента" setVisibility={props.setVisibility}>
             <img className='pb-4' src={props.image_large} alt={props.name} />
             <p className='text text_type_main-medium pb-8'>{props.name}</p>
             <table className={`${styles.details_table} pb-15 text_color_inactive`}>
@@ -36,4 +36,5 @@ IngredientDetails.propTypes = {
     carbohydrates: PropTypes.number.isRequired,
     calories: PropTypes.number.isRequired,
     image_large: PropTypes.string.isRequired,
+    setVisibility: PropTypes.func.isRequired
 }

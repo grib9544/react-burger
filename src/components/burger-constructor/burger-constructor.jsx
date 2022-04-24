@@ -6,15 +6,15 @@ import { OrderDetails } from '../order-details/order-details'
 
 export const BurgerConstructor = () => {
 
-    const [state, setState] = React.useState(false)
+    const [visibility, setVisibility] = React.useState(false)
 
-    const openModal = () => {
-        setState(true)
+    const onOrder = () => {
+        setVisibility(true)
     }
 
     return (
         <>  
-            {state && <OrderDetails />}
+            {visibility && <OrderDetails setVisibility={setVisibility} />}
             <section className={styles.constructor}>
                 <div className={styles.constructor__list}>
                     {/* mocked */}
@@ -45,7 +45,7 @@ export const BurgerConstructor = () => {
                         <span className="text text_type_digits-medium">610</span>
                         <CurrencyIcon />
                     </div>
-                    <Button type="primary" size="medium" onClick={openModal}>
+                    <Button type="primary" size="medium" onClick={onOrder}>
                         Оформить заказ
                     </Button>
                 </div>

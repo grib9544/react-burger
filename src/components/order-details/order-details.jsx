@@ -1,10 +1,11 @@
 import styles from './order-details.module.css';
 import { Modal } from '../modal/modal';
 import doneSvg from '../../assets/done.svg';
+import PropTypes from 'prop-types';
 
-export const OrderDetails = () => {
+export const OrderDetails = ({ setVisibility }) => {
     return (
-        <Modal>
+        <Modal setVisibility={setVisibility}>
             <p className={`${styles.order_id__shadow} text text_type_digits-large pb-8`}>
                 034538
             </p>
@@ -20,3 +21,6 @@ export const OrderDetails = () => {
     )
 }
 
+OrderDetails.propTypes = {
+    setVisibility: PropTypes.func.isRequired
+}
