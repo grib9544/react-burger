@@ -27,5 +27,5 @@
 }
 
 .scrollable_content {
-  overflow-y: inherit;
+  overflow-y: auto;
 }

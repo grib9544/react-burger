@@ -1,4 +1,5 @@
 import { API_URL } from './constants';
+import { FetchError } from './error';
 
 export async function fetchIngredients() {
     try {
@@ -6,7 +7,7 @@ export async function fetchIngredients() {
         const data = await response.json();
 
         if (!response.ok || !data.success) {
-            throw new Error(data.message);
+            throw new FetchError(data.message);
         }
         
         return data.data
