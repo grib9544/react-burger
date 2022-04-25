@@ -37,5 +37,4 @@ IngredientCard.propTypes = {
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
-    setVisibility: PropTypes.func.isRequired
 }
