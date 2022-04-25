@@ -1,11 +1,9 @@
 import styles from './order-details.module.css';
-import { Modal } from '../modal/modal';
 import doneSvg from '../../assets/done.svg';
-import PropTypes from 'prop-types';
 
-export const OrderDetails = ({ setVisibility }) => {
+export const OrderDetails = () => {
     return (
-        <Modal setVisibility={setVisibility}>
+        <>
             <p className={`${styles.order_id__shadow} text text_type_digits-large pb-8`}>
                 034538
             </p>
@@ -17,10 +15,6 @@ export const OrderDetails = ({ setVisibility }) => {
             <p className='text text_type_main-default text_color_inactive pb-30'>
                 Дождитесь готовности на орбитальной станции
             </p>
-        </Modal>
+        </>
     )
-}
-
-OrderDetails.propTypes = {
-    setVisibility: PropTypes.func.isRequired
 }

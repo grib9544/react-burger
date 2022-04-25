@@ -30,7 +30,7 @@ export const App = () => {
                     return;
                 }
 
-                setState({ ...state, error: 'Oops. Something went wrong', isLoading: false });
+                setState({ ...state, error: 'Ой. Что-то пошло не так!', isLoading: false });
             }
         }
         getIngredients();
@@ -40,7 +40,7 @@ export const App = () => {
     <>
         <AppHeader />
         <main className={styles.main}>
-            {state.isLoading && <div className="text text_type_main-large">Loading...</div>}
+            {state.isLoading && <div className="text text_type_main-large">Загрузка...</div>}
             {state.error && <div className="text text_type_main-large">{state.error}</div>}
             {!state.isLoading && !state.error && (
                 <>

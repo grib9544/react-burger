@@ -3,6 +3,7 @@ import { ConstructorItem } from './constructor-item/constructor-item'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from 'react'
 import { OrderDetails } from '../order-details/order-details'
+import { Modal } from '../modal/modal'
 
 export const BurgerConstructor = () => {
 
@@ -14,7 +15,11 @@ export const BurgerConstructor = () => {
 
     return (
         <>  
-            {visibility && <OrderDetails setVisibility={setVisibility} />}
+            {visibility && (
+                <Modal setVisibility={setVisibility}>
+                    <OrderDetails />
+                </Modal>
+            )}
             <section className={styles.constructor}>
                 <div className={styles.constructor__list}>
                     {/* mocked */}
