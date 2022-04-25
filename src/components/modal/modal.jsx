@@ -42,7 +42,7 @@ export const Modal = ({ title, setVisibility, children, mountNode }) => {
 }
 
 Modal.defaultProps = {
-    mountNode: document.getElementById('root'),
+    mountNode: document.getElementById('modals'),
 }
 
 Modal.propTypes = {
