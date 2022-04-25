@@ -27,10 +27,10 @@ export const Modal = ({ title, setVisibility, children, mountNode }) => {
         ReactDOM.createPortal(
             <ModalOverlay onClick={onClick}>
                 <div className={styles.modal}>
-                    <header className={styles.modal__header}>
+                    <div className={styles.modal__header}>
                         <p className="text text_type_main-large">{title}</p>
                         <CloseIcon type="primary" onClick={onClose} />
-                    </header>
+                    </div>
                     <div className={styles.modal__content}>
                         {children}
                     </div>
