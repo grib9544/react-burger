@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0 16px;
+  overflow-y: inherit;
 }
 
 .constructor__list {
@@ -11,6 +12,7 @@
   flex-direction: column;
   gap: 16px;
   margin-bottom: 40px;
+  overflow-y: inherit;
 }
 
 .constructor__scrollable {
@@ -18,7 +20,7 @@
   max-height: 400px;
   flex-direction: column;
   gap: 16px;
-  overflow-y: scroll;
+  overflow-y: inherit;
 }
 
 .constructor__order {

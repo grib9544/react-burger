@@ -1,0 +1,18 @@
+.overlay {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.overlay__content {
+  min-width: 30%;
+  margin: auto;
+}
+
+.overlay__flex {
+  display: flex;
+}

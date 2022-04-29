@@ -1,15 +1,16 @@
 .main {
+  display: flex;
+  flex-direction: column;
   max-width: 1200px;
   padding: 0 20px;
   margin: 0 auto;
+  overflow-y: hidden;
 }
 
 .main__content {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 40px;
-}
-
-.main__tab2 {
-  background-color: red;
+  overflow-y: inherit;
+  padding-bottom: 40px;
 }
