@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './burger-ingredients.module.css'
 import { IngredientCard } from './ingredient-card/ingredient-card'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
+import { IngredientsContext } from '../../services/contexts/ingredients';
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
+    const ingredients = useContext(IngredientsContext)
+
     const [current, setCurrent] = React.useState('bun')
 
     return (
@@ -57,20 +59,4 @@ export const BurgerIngredients = ({ ingredients }) => {
             </div>
         </section>
     )
-}
-
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string,
-        image_mobile: PropTypes.string,
-        image_large: PropTypes.string,
-    }))
 }

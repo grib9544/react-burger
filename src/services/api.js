@@ -1,5 +1,5 @@
-import { API_URL } from './constants';
-import { FetchError } from './error';
+import { API_URL } from '../constants';
+import { FetchError } from '../error';
 
 export async function fetchIngredients() {
     try {

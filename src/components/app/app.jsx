@@ -4,8 +4,9 @@ import { AppHeader } from '../app-header/header'
 import styles from './app.module.css'
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
-import { fetchIngredients } from '../../service';
+import { fetchIngredients } from '../../services/api';
 import { FetchError } from '../../error';
+import { IngredientsContext } from '../../services/contexts/ingredients';
 
 
 export const App = () => {
@@ -48,8 +49,10 @@ export const App = () => {
                         Соберите бургер
                     </h1>
                     <div className={styles.main__content}>
-                        <BurgerIngredients ingredients={state.ingredients} />
-                        <BurgerConstructor />
+                        <IngredientsContext.Provider value={state.ingredients}>
+                            <BurgerIngredients />
+                            <BurgerConstructor />
+                        </IngredientsContext.Provider>
                     </div>
                 </>
             )}
