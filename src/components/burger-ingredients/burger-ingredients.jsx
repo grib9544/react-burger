@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import styles from './burger-ingredients.module.css'
 import { IngredientCard } from './ingredient-card/ingredient-card'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IngredientsContext } from '../../services/contexts/ingredients';
+import { ConstructorContext } from '../../services/contexts/constructor';
 
 export const BurgerIngredients = () => {
-    const ingredients = useContext(IngredientsContext)
+    const { constrState } = useContext(ConstructorContext)
 
     const [current, setCurrent] = React.useState('bun')
 
@@ -30,7 +30,7 @@ export const BurgerIngredients = () => {
                     Булки
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {ingredients.filter(ing => ing.type === 'bun').map(ing => (
+                    {constrState.ingredients.filter(ing => ing.type === 'bun').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard  {...ing} />    
                         </li>
@@ -40,7 +40,7 @@ export const BurgerIngredients = () => {
                     Соусы
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {ingredients.filter(ing => ing.type === 'sauce').map(ing => (
+                    {constrState.ingredients.filter(ing => ing.type === 'sauce').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard  {...ing} />
                         </li>
@@ -50,7 +50,7 @@ export const BurgerIngredients = () => {
                     Ингредиенты
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {ingredients.filter(ing => ing.type === 'main').map(ing => (
+                    {constrState.ingredients.filter(ing => ing.type === 'main').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard {...ing} />
                         </li>
