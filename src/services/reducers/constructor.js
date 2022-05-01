@@ -1,11 +1,5 @@
 function calculateTotalCost (ingredients) {
-    return ingredients.reduce((acc, curr) => {
-        if (curr.type !== 'bun') {
-            return acc + curr.price
-        }
-
-        return acc + curr.price * 2
-    }, 0)
+    return ingredients.reduce((acc, curr) => acc + curr.price, 0)
 }
 
 export const constructorReducer = (state, action) => {
@@ -26,7 +20,12 @@ export const constructorReducer = (state, action) => {
                 } 
             }
 
-            const bunBurger = [...state.burger.filter(ing => ing.type !== 'bun'), action.payload]
+            const bunBurger = [
+                ...state.burger.filter(ing => ing.type !== 'bun'), 
+                action.payload, 
+                action.payload
+            ]
+            
             return {
                 ...state,
                 burger: bunBurger,

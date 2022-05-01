@@ -1,11 +1,12 @@
 import styles from './ingredient-card.module.css'
 import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 import { Modal } from '../../modal/modal';
 import { ConstructorContext } from '../../../services/contexts/constructor';
 import { randomAlphaNumeric } from '../../../utils'
+import { useDoubleClick } from '../../../hooks/doubleClick';
 
 export const IngredientCard = (props) => {
     const { constrState, constrDispatcher } = useContext(ConstructorContext)
@@ -18,10 +19,15 @@ export const IngredientCard = (props) => {
         setCount(ingredientCount)
     }, [constrState.burger, props._id])
     
-    const onClick = () => {
-        constrDispatcher({ type: 'SET_INGREDIENT', payload: {...props, constrId: randomAlphaNumeric()}})
-        // setVisibility(true)
-    }
+    const onClick = useDoubleClick(
+        () => constrDispatcher(
+            { 
+                type: 'SET_INGREDIENT', 
+                payload: {...props, constrId: randomAlphaNumeric()}
+            }
+        ),
+        () => setVisibility(true),
+    );
 
     return (
         <>
