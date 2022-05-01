@@ -16,8 +16,13 @@ export const BurgerConstructor = () => {
     const onOrder = () => {
         const makeOrder = async () => {
             try {
-                const { orderId } = await createOrder(constrState.burger.map(ing => ing._id));
-
+                const { orderId } = await createOrder(
+                    [   
+                        constrState.burger.bun._id,
+                        constrState.burger.bun._id,
+                        ...constrState.burger.filling.map(ing => ing._id)
+                    ]
+                );
                 constrDispatcher({ type: 'SET_ORDER', payload: orderId });
                 setVisibility(true)
             } catch (error) {
@@ -41,25 +46,25 @@ export const BurgerConstructor = () => {
             )}
             <section className={styles.constructor}>
                 <div className={styles.constructor__list}>
-                    {constrState.burger.filter(ing => ing.type === 'bun').map(ing => (
+                    {constrState.burger.bun && 
                         <ConstructorItem
-                            {...ing}
-                            type="top"
+                            {...constrState.burger.bun}
+                            itemType="top"
                             isLocked={true}
                         />
-                    ))}
+                    }
                     <div className={styles.constructor__scrollable}>
-                        {constrState.burger.filter(ing => ing.type !== 'bun').map(ing => (
+                        {constrState.burger.filling.map(ing => (
                             <ConstructorItem key={ing.constrId} {...ing} />
                         ))}
                     </div>
-                    {constrState.burger.filter(ing => ing.type === 'bun').map(ing => (
+                    {constrState.burger.bun && 
                         <ConstructorItem
-                            {...ing}
-                            type="bottom"
+                            {...constrState.burger.bun}
+                            itemType="bottom"
                             isLocked={true}
                         />
-                    ))}
+                    }
                 </div>
                 <div className={styles.constructor__order}>
                     <div className={styles.price}>
@@ -72,7 +77,7 @@ export const BurgerConstructor = () => {
                         type="primary" 
                         size="medium" 
                         onClick={onOrder} 
-                        disabled={!constrState.burger.length}
+                        disabled={!constrState.burger.bun}
                     >
                         Оформить заказ
                     </Button>

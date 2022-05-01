@@ -1,5 +1,5 @@
-function calculateTotalCost (ingredients) {
-    return ingredients.reduce((acc, curr) => acc + curr.price, 0)
+function calculateTotalCost(burger) {
+    return burger.filling.reduce((acc, curr) => acc + curr.price, 0) + (burger.bun?.price || 0) * 2;
 }
 
 export const constructorReducer = (state, action) => {
@@ -11,39 +11,50 @@ export const constructorReducer = (state, action) => {
             }
         case 'SET_INGREDIENT':
             if (action.payload.type !== 'bun' ) {
-                const burger = [...state.burger, action.payload]
+                const updatedfilling = {
+                    ...state.burger,
+                    filling: [...state.burger.filling, action.payload]
+                }
 
                 return {
                     ...state,
-                    burger: [...state.burger, action.payload],
-                    totalCost: calculateTotalCost(burger)
+                    burger: updatedfilling,
+                    totalCost: calculateTotalCost(updatedfilling)
                 } 
             }
 
-            const bunBurger = [
-                ...state.burger.filter(ing => ing.type !== 'bun'), 
-                action.payload, 
-                action.payload
-            ]
+            const updatedBuns = {
+                ...state.burger,
+                bun: action.payload
+            }
             
             return {
                 ...state,
-                burger: bunBurger,
-                totalCost: calculateTotalCost(bunBurger)
+                burger: updatedBuns,
+                totalCost: calculateTotalCost(updatedBuns)
             }
         case 'REMOVE_INGREDIENT':
-            const removeBurger = state.burger.filter(ing => ing.constrId !== action.payload.constrId)
+            const filling = state.burger.filling
+                .filter(ing => ing.constrId !== action.payload.constrId)
+
+            const removeFilling = {
+                ...state.burger,
+                filling: filling
+            }
 
             return {
                 ...state,
-                burger: removeBurger,
-                totalCost: calculateTotalCost(removeBurger)
+                burger: removeFilling,
+                totalCost: calculateTotalCost(removeFilling)
             }
         case 'SET_ORDER':
             return {
                 ...state,
                 order: action.payload,
-                burger: [],
+                burger: {
+                    bun: null,
+                    filling: []
+                },
                 totalCost: 0
             }
         default:

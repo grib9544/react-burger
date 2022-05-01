@@ -7,7 +7,7 @@ import { useContext } from 'react';
 export const ConstructorItem = (props) => {
     const { constrDispatcher } = useContext(ConstructorContext)
 
-    const { type, isLocked, name, price, image} = props
+    const { itemType, isLocked, name, price, image} = props
 
     const handleClose = () => {
         constrDispatcher({ type: 'REMOVE_INGREDIENT', payload: {...props} })
@@ -22,7 +22,7 @@ export const ConstructorItem = (props) => {
             )}
             <div className={styles.item__element}>
                 <ConstructorElement
-                    type={type}
+                    type={itemType}
                     isLocked={isLocked}
                     text={name}
                     price={price}
@@ -41,7 +41,7 @@ ConstructorItem.defaultProps = {
 ConstructorItem.propTypes = {
     _id: PropTypes.string.isRequired,
     constrId: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['top', 'bottom']),
+    itemType: PropTypes.oneOf(['top', 'bottom']),
     isLocked: PropTypes.bool,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,

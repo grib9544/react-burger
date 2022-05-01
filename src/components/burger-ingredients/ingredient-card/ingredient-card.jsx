@@ -15,9 +15,14 @@ export const IngredientCard = (props) => {
     const [visibility, setVisibility] = useState(false)
 
     useEffect(() => {
-        const ingredientCount = constrState.burger.filter(ing => ing._id === props._id).length
-        setCount(ingredientCount)
-    }, [constrState.burger, props._id])
+        if (props.type === 'bun' && constrState.burger.bun?._id === props._id) {
+            setCount(2)
+            return
+        }
+
+        const fillingCount = constrState.burger.filling.filter(ing => ing._id === props._id).length
+        setCount(fillingCount)
+    }, [constrState.burger, props._id, props.type])
     
     const onClick = useDoubleClick(
         () => constrDispatcher(

@@ -11,7 +11,10 @@ import { constructorReducer } from '../../services/reducers/constructor';
 
 const initState = {
     ingredients: [],
-    burger: [],
+    burger: {
+        bun: null,
+        filling: []
+    },
     totalCost: 0,
     order: null
 }
