@@ -1,15 +1,20 @@
 import styles from './ingredient-card.module.css'
 import PropTypes from 'prop-types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import React from 'react';
+import React, { useContext } from 'react';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 import { Modal } from '../../modal/modal';
+import { ConstructorContext } from '../../../services/contexts/constructor';
+import { randomAlphaNumeric } from '../../../utils'
 
 export const IngredientCard = (props) => {
+    const { constrState, constrDispatcher } = useContext(ConstructorContext)
+
     const [visibility, setVisibility] = React.useState(false)
     
     const onClick = () => {
-        setVisibility(true)
+        constrDispatcher({ type: 'SET_INGREDIENT', payload: {...props, constrId: randomAlphaNumeric()}})
+        // setVisibility(true)
     }
 
     return (
@@ -34,6 +39,7 @@ export const IngredientCard = (props) => {
 }
 
 IngredientCard.propTypes = {
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     proteins: PropTypes.number.isRequired,
     fat: PropTypes.number.isRequired,

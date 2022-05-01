@@ -7,6 +7,7 @@ import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { fetchIngredients } from '../../services/api';
 import { FetchError } from '../../error';
 import { ConstructorContext } from '../../services/contexts/constructor';
+import { constructorReducer } from '../../services/reducers/constructor';
 
 const initState = {
     ingredients: [],
@@ -15,48 +16,8 @@ const initState = {
     order: null
 }
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'SET_INGREDIENTS_LIST':
-            return {
-                ...state,
-                ingredients: action.payload
-            }
-        case 'SET_INGREDIENT':
-            const addCost = action.payload.type === 'bun' 
-                ? action.payload.price * 2 
-                : action.payload.price;
-            
-            return {
-                ...state,
-                burger: [...state.burger, action.payload],
-                totalCost: state.totalCost + addCost
-            }
-        case 'REMOVE_INGREDIENT':
-            let burger = state.burger.filter(ing => ing._id !== action.payload._id);
-
-            const removeCost = action.payload.type === 'bun' 
-                ? action.payload.price * 2 
-                : action.payload.price;
-
-            return {
-                ...state,
-                burger: burger,
-                totalCost: state.totalCost - removeCost
-            }
-        case 'RESET_ORDER':
-            return {
-                ...state,
-                burger: [],
-                totalCost: 0
-            }
-        default:
-            return state
-    }
-}
-
 export const App = () => {
-    const [constrState, constrDispatcher] = useReducer(reducer, initState);
+    const [constrState, constrDispatcher] = useReducer(constructorReducer, initState);
 
     React.useEffect(() => {
         const getIngredients = async () => {
@@ -65,11 +26,11 @@ export const App = () => {
                 constrDispatcher({ type: 'SET_INGREDIENTS_LIST', payload: ingredients });
             } catch (error) {
                 if (error instanceof FetchError) {
-                    console.log(error.message)
+                    console.error(error.message)
                     return;
                 }
 
-                console.log(error)
+                console.error(error)
             }
         }
         getIngredients();

@@ -20,7 +20,7 @@
   max-height: 400px;
   flex-direction: column;
   gap: 16px;
-  overflow-y: inherit;
+  overflow: overlay;
 }
 
 .constructor__order {
