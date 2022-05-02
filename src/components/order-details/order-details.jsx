@@ -1,11 +1,12 @@
 import styles from './order-details.module.css';
 import doneSvg from '../../assets/done.svg';
+import PropTypes from 'prop-types';
 
-export const OrderDetails = () => {
+export const OrderDetails = ({ orderId }) => {
     return (
         <>
             <p className={`${styles.order_id__shadow} text text_type_digits-large pb-8`}>
-                034538
+                { orderId }
             </p>
             <p className='text text_type_main-medium pb-15'>идентификатор заказа</p>
             <img className='pb-15' src={doneSvg} alt="Заказ принят"></img>
@@ -17,4 +18,8 @@ export const OrderDetails = () => {
             </p>
         </>
     )
+}
+
+OrderDetails.propTypes = {
+    orderId: PropTypes.number.isRequired,
 }

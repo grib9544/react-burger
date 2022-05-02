@@ -1,16 +1,38 @@
 import styles from './ingredient-card.module.css'
 import PropTypes from 'prop-types';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import React from 'react';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useContext, useState, useEffect } from 'react';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 import { Modal } from '../../modal/modal';
+import { ConstructorContext } from '../../../services/contexts/constructor';
+import { randomAlphaNumeric } from '../../../utils'
+import { useDoubleClick } from '../../../hooks/doubleClick';
 
 export const IngredientCard = (props) => {
-    const [visibility, setVisibility] = React.useState(false)
+    const { constrState, constrDispatcher } = useContext(ConstructorContext)
+
+    const [count, setCount] = useState(0)
+    const [visibility, setVisibility] = useState(false)
+
+    useEffect(() => {
+        if (props.type === 'bun' && constrState.burger.bun?._id === props._id) {
+            setCount(2)
+            return
+        }
+
+        const fillingCount = constrState.burger.filling.filter(ing => ing._id === props._id).length
+        setCount(fillingCount)
+    }, [constrState.burger, props._id, props.type])
     
-    const onClick = () => {
-        setVisibility(true)
-    }
+    const onClick = useDoubleClick(
+        () => constrDispatcher(
+            { 
+                type: 'SET_INGREDIENT', 
+                payload: {...props, constrId: randomAlphaNumeric()}
+            }
+        ),
+        () => setVisibility(true),
+    );
 
     return (
         <>
@@ -20,6 +42,7 @@ export const IngredientCard = (props) => {
                 </Modal> )
             }
             <div className={styles.ingredient} onClick={onClick}>
+                {!!count && <Counter count={count} size="default" />}
                 <img src={props.image} alt={props.name} className={styles.ingredient__img} />
                 <div className={styles.ingredient__price}>
                     <span className='text text_type_digits-default'>
@@ -34,6 +57,7 @@ export const IngredientCard = (props) => {
 }
 
 IngredientCard.propTypes = {
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     proteins: PropTypes.number.isRequired,
     fat: PropTypes.number.isRequired,

@@ -1,8 +1,18 @@
 import styles from './constructor-item.module.css'
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorContext } from '../../../services/contexts/constructor';
+import { useContext } from 'react';
 
-export const ConstructorItem = ({ type, isLocked, text, price, thumbnail}) => {
+export const ConstructorItem = (props) => {
+    const { constrDispatcher } = useContext(ConstructorContext)
+
+    const { itemType, isLocked, name, price, image} = props
+
+    const handleClose = () => {
+        constrDispatcher({ type: 'REMOVE_INGREDIENT', payload: {...props} })
+    }
+
     return (
         <div className={styles.item}>
             { isLocked || (
@@ -12,11 +22,12 @@ export const ConstructorItem = ({ type, isLocked, text, price, thumbnail}) => {
             )}
             <div className={styles.item__element}>
                 <ConstructorElement
-                    type={type}
+                    type={itemType}
                     isLocked={isLocked}
-                    text={text}
+                    text={name}
                     price={price}
-                    thumbnail={thumbnail}
+                    thumbnail={image}
+                    handleClose={handleClose}
                 />
             </div>
         </div>
@@ -28,9 +39,11 @@ ConstructorItem.defaultProps = {
 }
 
 ConstructorItem.propTypes = {
-    type: PropTypes.oneOf(['top', 'bottom']),
+    _id: PropTypes.string.isRequired,
+    constrId: PropTypes.string.isRequired,
+    itemType: PropTypes.oneOf(['top', 'bottom']),
     isLocked: PropTypes.bool,
-    text: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    thumbnail: PropTypes.string.isRequired
+    image: PropTypes.string.isRequired
 }

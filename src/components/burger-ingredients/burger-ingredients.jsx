@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './burger-ingredients.module.css'
 import { IngredientCard } from './ingredient-card/ingredient-card'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
+import { ConstructorContext } from '../../services/contexts/constructor';
 
-export const BurgerIngredients = ({ ingredients }) => {
+export const BurgerIngredients = () => {
+    const { constrState } = useContext(ConstructorContext)
+
     const [current, setCurrent] = React.useState('bun')
 
     return (
@@ -28,7 +30,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                     Булки
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {ingredients.filter(ing => ing.type === 'bun').map(ing => (
+                    {constrState.ingredients.filter(ing => ing.type === 'bun').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard  {...ing} />    
                         </li>
@@ -38,7 +40,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                     Соусы
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {ingredients.filter(ing => ing.type === 'sauce').map(ing => (
+                    {constrState.ingredients.filter(ing => ing.type === 'sauce').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard  {...ing} />
                         </li>
@@ -48,7 +50,7 @@ export const BurgerIngredients = ({ ingredients }) => {
                     Ингредиенты
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {ingredients.filter(ing => ing.type === 'main').map(ing => (
+                    {constrState.ingredients.filter(ing => ing.type === 'main').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard {...ing} />
                         </li>
@@ -57,20 +59,4 @@ export const BurgerIngredients = ({ ingredients }) => {
             </div>
         </section>
     )
-}
-
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(['bun', 'main', 'sauce']).isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string,
-        image_mobile: PropTypes.string,
-        image_large: PropTypes.string,
-    }))
 }
