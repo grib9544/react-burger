@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './burger-ingredients.module.css'
 import { IngredientCard } from './ingredient-card/ingredient-card'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ConstructorContext } from '../../services/contexts/constructor';
+import { useSelector } from 'react-redux'
 
 export const BurgerIngredients = () => {
-    const { constrState } = useContext(ConstructorContext)
+    const ingredients = useSelector(state => state.burger.ingredients.items);
 
     const [current, setCurrent] = React.useState('bun')
 
@@ -30,7 +30,7 @@ export const BurgerIngredients = () => {
                     Булки
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {constrState.ingredients.filter(ing => ing.type === 'bun').map(ing => (
+                    {ingredients.filter(ing => ing.type === 'bun').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard  {...ing} />    
                         </li>
@@ -40,7 +40,7 @@ export const BurgerIngredients = () => {
                     Соусы
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {constrState.ingredients.filter(ing => ing.type === 'sauce').map(ing => (
+                    {ingredients.filter(ing => ing.type === 'sauce').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard  {...ing} />
                         </li>
@@ -50,7 +50,7 @@ export const BurgerIngredients = () => {
                     Ингредиенты
                 </h2>
                 <ul className={styles.ingredients__list}>
-                    {constrState.ingredients.filter(ing => ing.type === 'main').map(ing => (
+                    {ingredients.filter(ing => ing.type === 'main').map(ing => (
                         <li key={ing._id}>
                             <IngredientCard {...ing} />
                         </li>

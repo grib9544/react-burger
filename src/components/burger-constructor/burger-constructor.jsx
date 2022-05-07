@@ -1,66 +1,47 @@
 import styles from './burger-constructor.module.css'
 import { ConstructorItem } from './constructor-item/constructor-item'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import React, { useContext } from 'react'
+import React from 'react'
 import { OrderDetails } from '../order-details/order-details'
 import { Modal } from '../modal/modal'
-import { ConstructorContext } from '../../services/contexts/constructor';
-import { createOrder } from '../../services/api';
-import { FetchError } from '../../error';
+import { useDispatch, useSelector } from 'react-redux'
+import { createOrderThunk } from '../../services/slices/burger'
 
 export const BurgerConstructor = () => {
-    const { constrState, constrDispatcher } = useContext(ConstructorContext)
+    const dispatch = useDispatch();
+    const { composition, totalCost, order } = useSelector(state => state.burger)
 
     const [visibility, setVisibility] = React.useState(false)
 
     const onOrder = () => {
-        const makeOrder = async () => {
-            try {
-                const { orderId } = await createOrder(
-                    [   
-                        constrState.burger.bun._id,
-                        constrState.burger.bun._id,
-                        ...constrState.burger.filling.map(ing => ing._id)
-                    ]
-                );
-                constrDispatcher({ type: 'SET_ORDER', payload: orderId });
-                setVisibility(true)
-            } catch (error) {
-                if (error instanceof FetchError) {
-                    console.error(error.message)
-                    return;
-                }
-
-                console.error(error)
-            }
-        }
-        makeOrder();
+        dispatch(createOrderThunk());
+        setVisibility(true)
     }
 
     return (
         <>  
-            {visibility && (
+            {visibility && !order.loading && (
                 <Modal setVisibility={setVisibility}>
-                    <OrderDetails orderId={constrState.order} />
+                    <OrderDetails orderId={order.orderId} />
                 </Modal>
             )}
             <section className={styles.constructor}>
                 <div className={styles.constructor__list}>
-                    {constrState.burger.bun && 
+                    {composition.bun && 
                         <ConstructorItem
-                            {...constrState.burger.bun}
+                            {...composition.bun}
                             itemType="top"
                             isLocked={true}
                         />
                     }
                     <div className={styles.constructor__scrollable}>
-                        {constrState.burger.filling.map(ing => (
-                            <ConstructorItem key={ing.constrId} {...ing} />
+                        {composition.filling.map(ing => (
+                            <ConstructorItem key={ing.composId} {...ing} />
                         ))}
                     </div>
-                    {constrState.burger.bun && 
+                    {composition.bun && 
                         <ConstructorItem
-                            {...constrState.burger.bun}
+                            {...composition.bun}
                             itemType="bottom"
                             isLocked={true}
                         />
@@ -69,7 +50,7 @@ export const BurgerConstructor = () => {
                 <div className={styles.constructor__order}>
                     <div className={styles.price}>
                         <span className="text text_type_digits-medium">
-                            {constrState.totalCost}
+                            {totalCost}
                         </span>
                         <CurrencyIcon />
                     </div>
@@ -77,7 +58,7 @@ export const BurgerConstructor = () => {
                         type="primary" 
                         size="medium" 
                         onClick={onOrder} 
-                        disabled={!constrState.burger.bun}
+                        disabled={!composition.bun}
                     >
                         Оформить заказ
                     </Button>

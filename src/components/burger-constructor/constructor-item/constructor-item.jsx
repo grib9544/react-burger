@@ -1,16 +1,16 @@
 import styles from './constructor-item.module.css'
 import PropTypes from 'prop-types';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ConstructorContext } from '../../../services/contexts/constructor';
-import { useContext } from 'react';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
+import { removeIngredient } from '../../../services/slices/burger';
 
 export const ConstructorItem = (props) => {
-    const { constrDispatcher } = useContext(ConstructorContext)
+    const dispatch = useDispatch()
 
-    const { itemType, isLocked, name, price, image} = props
+    const { composId, itemType, isLocked, name, price, image} = props
 
     const handleClose = () => {
-        constrDispatcher({ type: 'REMOVE_INGREDIENT', payload: {...props} })
+        dispatch(removeIngredient({ composId }))
     }
 
     return (
@@ -40,7 +40,7 @@ ConstructorItem.defaultProps = {
 
 ConstructorItem.propTypes = {
     _id: PropTypes.string.isRequired,
-    constrId: PropTypes.string.isRequired,
+    composId: PropTypes.string.isRequired,
     itemType: PropTypes.oneOf(['top', 'bottom']),
     isLocked: PropTypes.bool,
     name: PropTypes.string.isRequired,
