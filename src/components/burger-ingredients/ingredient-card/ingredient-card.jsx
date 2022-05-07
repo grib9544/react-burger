@@ -8,6 +8,7 @@ import { randomAlphaNumeric } from '../../../utils'
 import { useDoubleClick } from '../../../hooks/doubleClick';
 import { useDispatch, useSelector } from 'react-redux'
 import { setIngredient } from '../../../services/slices/burger';
+import { useDrag } from 'react-dnd';
 
 export const IngredientCard = (props) => {
     const { composition } = useSelector(state => state.burger)
@@ -15,6 +16,15 @@ export const IngredientCard = (props) => {
 
     const [count, setCount] = useState(0)
     const [visibility, setVisibility] = useState(false)
+
+    const [{ isDrag }, dragRef] = useDrag({
+        type: 'composition',
+        item: { _id: props._id },
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
+
 
     useEffect(() => {
         if (props.type === 'bun' && composition.bun?._id === props._id) {
@@ -38,7 +48,7 @@ export const IngredientCard = (props) => {
                     <IngredientDetails {...props} />
                 </Modal> )
             }
-            <div className={styles.ingredient} onClick={onClick}>
+            <div className={styles.ingredient} onClick={onClick} ref={dragRef}>
                 {!!count && <Counter count={count} size="default" />}
                 <img src={props.image} alt={props.name} className={styles.ingredient__img} />
                 <div className={styles.ingredient__price}>

@@ -5,7 +5,8 @@ import React from 'react'
 import { OrderDetails } from '../order-details/order-details'
 import { Modal } from '../modal/modal'
 import { useDispatch, useSelector } from 'react-redux'
-import { createOrderThunk } from '../../services/slices/burger'
+import { createOrderThunk, setIngredient } from '../../services/slices/burger'
+import { useDrop } from 'react-dnd'
 
 export const BurgerConstructor = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,16 @@ export const BurgerConstructor = () => {
         setVisibility(true)
     }
 
+    const [{ isHover }, dropTarget] = useDrop({
+        accept: "composition",
+        drop({ _id }) {
+            dispatch(setIngredient({ _id }))
+        },
+        collect: monitor => ({
+            isHover: monitor.isOver(),
+        })
+    });
+
     return (
         <>  
             {visibility && !order.loading && (
@@ -26,27 +37,36 @@ export const BurgerConstructor = () => {
                 </Modal>
             )}
             <section className={styles.constructor}>
-                <div className={styles.constructor__list}>
-                    {composition.bun && 
-                        <ConstructorItem
-                            {...composition.bun}
-                            itemType="top"
-                            isLocked={true}
-                        />
-                    }
-                    <div className={styles.constructor__scrollable}>
-                        {composition.filling.map(ing => (
-                            <ConstructorItem key={ing.composId} {...ing} />
-                        ))}
-                    </div>
-                    {composition.bun && 
-                        <ConstructorItem
-                            {...composition.bun}
-                            itemType="bottom"
-                            isLocked={true}
-                        />
-                    }
-                </div>
+                {!totalCost 
+                    ? ( 
+                        <div>
+                            Кек
+                        </div>
+                    )
+                    : (
+                        <div className={styles.constructor__list} ref={dropTarget}>
+                            {composition.bun && 
+                                <ConstructorItem
+                                    {...composition.bun}
+                                    itemType="top"
+                                    isLocked={true}
+                                />
+                            }
+                            <div className={styles.constructor__scrollable}>
+                                {composition.filling.map(ing => (
+                                    <ConstructorItem key={ing.composId} {...ing} />
+                                ))}
+                            </div>
+                            {composition.bun && 
+                                <ConstructorItem
+                                    {...composition.bun}
+                                    itemType="bottom"
+                                    isLocked={true}
+                                />
+                            }
+                        </div>       
+                    )
+                }
                 <div className={styles.constructor__order}>
                     <div className={styles.price}>
                         <span className="text text_type_digits-medium">

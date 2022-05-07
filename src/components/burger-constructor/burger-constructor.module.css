@@ -13,6 +13,9 @@
   gap: 16px;
   margin-bottom: 40px;
   overflow-y: inherit;
+  height: 100%;
+  border: 3px dashed #8585ad;
+  border-radius: 30px;
 }
 
 .constructor__scrollable {

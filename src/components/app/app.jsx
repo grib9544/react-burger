@@ -6,6 +6,9 @@ import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchIngredientsThunk } from '../../services/slices/burger'
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+
 
 export const App = () => {
     const ingredients = useSelector(state => state.burger.ingredients)
@@ -27,8 +30,10 @@ export const App = () => {
                         Соберите бургер
                     </h1>
                     <div className={styles.main__content}>
-                        <BurgerIngredients />
-                        <BurgerConstructor />
+                        <DndProvider backend={HTML5Backend}>
+                            <BurgerIngredients />
+                            <BurgerConstructor />
+                        </DndProvider>
                     </div>
                 </>
             )}

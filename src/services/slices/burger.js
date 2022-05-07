@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createOrder, fetchIngredients } from "../api";
+import { randomAlphaNumeric } from '../../utils'
 
 function calculateTotalCost(burger) {
     return burger.filling.reduce((acc, curr) => acc + curr.price, 0) + (burger.bun?.price || 0) * 2;
@@ -46,10 +47,15 @@ const burgerSlice = createSlice({
     },
     reducers: {
         setIngredient: (state, action) => {
-            if (action.payload.type !== 'bun' ) {
-                state.composition.filling.push(action.payload);
+            const ingredient = state.ingredients.items
+                .find(ing => ing._id === action.payload._id)
+
+            const composId = randomAlphaNumeric();
+
+            if (ingredient.type !== 'bun' ) {
+                state.composition.filling.push({...ingredient, composId});
             } else {
-                state.composition.bun = action.payload
+                state.composition.bun = { ...ingredient, composId }
             }
 
             state.totalCost = calculateTotalCost(state.composition)
