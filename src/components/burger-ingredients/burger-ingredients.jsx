@@ -1,61 +1,101 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { createRef, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useDebouncedCallback } from '../../hooks/useDebounce';
 import styles from './burger-ingredients.module.css';
 import { IngredientCard } from './ingredient-card/ingredient-card';
 
-export const BurgerIngredients = () => {
-  const ingredients = useSelector((state) => state.burger.ingredients.items);
+const ingredientNameMap = {
+  bun: 'Булки',
+  sauce: 'Соусы',
+  main: 'Начинки'
+};
 
+export const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState('bun');
+
+  const ingredientsItems = useSelector((state) => state.burger.ingredients.items);
+
+  const ingredientsMap = useMemo(() => {
+    const ingredientTypes = [...new Set(ingredientsItems.map((ingredient) => ingredient.type))];
+
+    return ingredientTypes.reduce((acc, type) => {
+      acc[type] = ingredientsItems.filter((ingredient) => ingredient.type === type);
+      return acc;
+    }, {});
+  }, [ingredientsItems]);
+
+  const tabsRef = useRef(null);
+  const elementsRef = useRef(
+    Object.keys(ingredientsMap).reduce((acc, type) => {
+      acc[type] = createRef();
+      return acc;
+    }, {}),
+    [ingredientsMap]
+  );
+
+  const onClick = (value) => {
+    elementsRef.current[value].current.scrollIntoView({
+      behavior: 'smooth'
+    });
+
+    setCurrent(value);
+  };
+
+  const onScroll = useDebouncedCallback(() => {
+    const nearestElement = {
+      distance: null,
+      tab: 'bun'
+    };
+
+    const tabElement = tabsRef.current;
+
+    Object.keys(elementsRef.current).forEach((type) => {
+      const element = elementsRef.current[type].current;
+
+      if (element) {
+        const distance = Math.abs(
+          tabElement.getBoundingClientRect().top - element.getBoundingClientRect().top
+        );
+
+        if (!nearestElement.distance || distance < nearestElement.distance) {
+          nearestElement.distance = distance;
+          nearestElement.tab = type;
+        }
+      }
+    });
+
+    setCurrent(nearestElement.tab);
+  }, 200);
 
   return (
     <section className={styles.ingredients}>
-      <div className={styles.ingredients__tab}>
-        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
-          Булки
-        </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
-          Соусы
-        </Tab>
-        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
-          Начинки
-        </Tab>
+      <div className={styles.ingredients__tab} ref={tabsRef}>
+        {Object.keys(ingredientsMap).map((type) => (
+          <Tab key={type} value={type} active={current === type} onClick={onClick}>
+            {ingredientNameMap[type]}
+          </Tab>
+        ))}
       </div>
-      {/* 
-                TODO: to separate component
-             */}
-      <div className={styles.scrollable_content}>
-        <h2 className="text text_type_main-medium">Булки</h2>
-        <ul className={styles.ingredients__list}>
-          {ingredients
-            .filter((ing) => ing.type === 'bun')
-            .map((ing) => (
-              <li key={ing._id}>
-                <IngredientCard {...ing} />
-              </li>
-            ))}
-        </ul>
-        <h2 className="text text_type_main-medium">Соусы</h2>
-        <ul className={styles.ingredients__list}>
-          {ingredients
-            .filter((ing) => ing.type === 'sauce')
-            .map((ing) => (
-              <li key={ing._id}>
-                <IngredientCard {...ing} />
-              </li>
-            ))}
-        </ul>
-        <h2 className="text text_type_main-medium">Ингредиенты</h2>
-        <ul className={styles.ingredients__list}>
-          {ingredients
-            .filter((ing) => ing.type === 'main')
-            .map((ing) => (
-              <li key={ing._id}>
-                <IngredientCard {...ing} />
-              </li>
-            ))}
-        </ul>
+      <div className={styles.scrollable_content} onScroll={onScroll}>
+        {Object.entries(ingredientsMap).map(([type, ingredients]) => (
+          <div key={type}>
+            <h2
+              id={type}
+              data-testid={type}
+              ref={elementsRef.current[type]}
+              className="text text_type_main-medium">
+              {ingredientNameMap[type]}
+            </h2>
+            <ul className={styles.ingredients__list}>
+              {ingredients.map((ing) => (
+                <li key={ing._id}>
+                  <IngredientCard {...ing} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </section>
   );

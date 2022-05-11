@@ -2,26 +2,22 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDoubleClick } from '../../../hooks/doubleClick';
-import { setIngredient } from '../../../services/slices/burger';
-import { randomAlphaNumeric } from '../../../utils';
+import { useSelector } from 'react-redux';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 import { Modal } from '../../modal/modal';
 import styles from './ingredient-card.module.css';
 
 export const IngredientCard = (props) => {
   const { composition } = useSelector((state) => state.burger);
-  const dispatch = useDispatch();
 
   const [count, setCount] = useState(0);
   const [visibility, setVisibility] = useState(false);
 
-  const [{ isDrag }, dragRef] = useDrag({
+  const [{ opacity }, dragRef] = useDrag({
     type: 'composition',
     item: { _id: props._id },
     collect: (monitor) => ({
-      isDrag: monitor.isDragging()
+      opacity: monitor.isDragging() ? 0.3 : 1
     })
   });
 
@@ -35,10 +31,9 @@ export const IngredientCard = (props) => {
     setCount(fillingCount);
   }, [composition, props._id, props.type]);
 
-  const onClick = useDoubleClick(
-    () => dispatch(setIngredient({ ...props, composId: randomAlphaNumeric() })),
-    () => setVisibility(true)
-  );
+  const onClick = () => {
+    setVisibility(true);
+  };
 
   return (
     <>
@@ -47,9 +42,9 @@ export const IngredientCard = (props) => {
           <IngredientDetails {...props} />
         </Modal>
       )}
-      <div className={styles.ingredient} onClick={onClick} ref={dragRef}>
+      <div className={styles.ingredient} onClick={onClick} style={{ opacity }}>
         {!!count && <Counter count={count} size="default" />}
-        <img src={props.image} alt={props.name} className={styles.ingredient__img} />
+        <img src={props.image} alt={props.name} className={styles.ingredient__img} ref={dragRef} />
         <div className={styles.ingredient__price}>
           <span className="text text_type_digits-default">{props.price}</span>
           <CurrencyIcon />

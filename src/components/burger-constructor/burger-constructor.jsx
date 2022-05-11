@@ -37,23 +37,19 @@ export const BurgerConstructor = () => {
         </Modal>
       )}
       <section className={styles.constructor}>
-        {!totalCost ? (
-          <div>Кек</div>
-        ) : (
-          <div className={styles.constructor__list} ref={dropTarget}>
-            {composition.bun && (
-              <ConstructorItem {...composition.bun} itemType="top" isLocked={true} />
-            )}
-            <div className={styles.constructor__scrollable}>
-              {composition.filling.map((ing) => (
-                <ConstructorItem key={ing.composId} {...ing} />
-              ))}
-            </div>
-            {composition.bun && (
-              <ConstructorItem {...composition.bun} itemType="bottom" isLocked={true} />
-            )}
+        <div className={styles.constructor__list} ref={dropTarget}>
+          {composition.bun && (
+            <ConstructorItem {...composition.bun} itemType="top" isLocked={true} />
+          )}
+          <div className={styles.constructor__scrollable}>
+            {composition.filling.map((ing) => (
+              <ConstructorItem key={ing.composId} {...ing} />
+            ))}
           </div>
-        )}
+          {composition.bun && (
+            <ConstructorItem {...composition.bun} itemType="bottom" isLocked={true} />
+          )}
+        </div>
         <div className={styles.constructor__order}>
           <div className={styles.price}>
             <span className="text text_type_digits-medium">{totalCost}</span>
