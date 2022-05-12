@@ -14,12 +14,16 @@ export const BurgerConstructor = () => {
 
   const [visibility, setVisibility] = React.useState(false);
 
+  const onClose = () => {
+    setVisibility(false);
+  };
+
   const onOrder = () => {
     dispatch(createOrderThunk());
     setVisibility(true);
   };
 
-  const [{ isHover }, dropTarget] = useDrop({
+  const [, dropTarget] = useDrop({
     accept: 'composition',
     drop({ _id }) {
       dispatch(setIngredient({ _id }));
@@ -32,7 +36,7 @@ export const BurgerConstructor = () => {
   return (
     <>
       {visibility && !order.loading && (
-        <Modal setVisibility={setVisibility}>
+        <Modal onClose={onClose}>
           <OrderDetails orderId={order.orderId} />
         </Modal>
       )}

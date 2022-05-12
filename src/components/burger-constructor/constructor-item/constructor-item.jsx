@@ -36,21 +36,23 @@ export const ConstructorItem = (props) => {
   });
 
   return (
-    <div className={styles.item} ref={!isLocked ? dropTarget : null}>
-      {isLocked || (
-        <div className={styles.item__icon}>
-          <DragIcon />
+    <div ref={!isLocked ? dropTarget : null}>
+      <div className={styles.item} ref={!isLocked ? dragRef : null}>
+        {isLocked || (
+          <div className={styles.item__icon}>
+            <DragIcon />
+          </div>
+        )}
+        <div className={styles.item__element}>
+          <ConstructorElement
+            type={itemType}
+            isLocked={isLocked}
+            text={name}
+            price={price}
+            thumbnail={image}
+            handleClose={handleClose}
+          />
         </div>
-      )}
-      <div className={styles.item__element} ref={!isLocked ? dragRef : null}>
-        <ConstructorElement
-          type={itemType}
-          isLocked={isLocked}
-          text={name}
-          price={price}
-          thumbnail={image}
-          handleClose={handleClose}
-        />
       </div>
     </div>
   );

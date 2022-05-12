@@ -37,7 +37,8 @@ const burgerSlice = createSlice({
       error: null,
       orderId: null
     },
-    totalCost: 0
+    totalCost: 0,
+    viewedIngredient: null
   },
   reducers: {
     setIngredient: (state, action) => {
@@ -74,6 +75,12 @@ const burgerSlice = createSlice({
       ];
 
       state.composition.filling = fillingArray;
+    },
+    setViewedIngredient: (state, action) => {
+      state.viewedIngredient = action.payload;
+    },
+    unsetViewedIngredient: (state) => {
+      state.viewedIngredient = null;
     }
   },
   extraReducers: {
@@ -112,6 +119,12 @@ const burgerSlice = createSlice({
   }
 });
 
-export const { setIngredient, removeIngredient, swapFillings } = burgerSlice.actions;
+export const {
+  setIngredient,
+  removeIngredient,
+  swapFillings,
+  setViewedIngredient,
+  unsetViewedIngredient
+} = burgerSlice.actions;
 
 export default burgerSlice.reducer;

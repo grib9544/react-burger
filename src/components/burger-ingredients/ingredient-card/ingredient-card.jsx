@@ -2,12 +2,14 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setViewedIngredient, unsetViewedIngredient } from '../../../services/slices/burger';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 import { Modal } from '../../modal/modal';
 import styles from './ingredient-card.module.css';
 
 export const IngredientCard = (props) => {
+  const dispatch = useDispatch();
   const { composition } = useSelector((state) => state.burger);
 
   const [count, setCount] = useState(0);
@@ -33,12 +35,18 @@ export const IngredientCard = (props) => {
 
   const onClick = () => {
     setVisibility(true);
+    dispatch(setViewedIngredient(props));
+  };
+
+  const onClose = () => {
+    setVisibility(false);
+    dispatch(unsetViewedIngredient());
   };
 
   return (
     <>
       {visibility && (
-        <Modal title="Детали ингредиента" setVisibility={setVisibility}>
+        <Modal title="Детали ингредиента" onClose={onClose}>
           <IngredientDetails {...props} />
         </Modal>
       )}

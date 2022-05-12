@@ -6,21 +6,21 @@ import { useKeyPress } from '../../hooks';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
-export const Modal = ({ title, setVisibility, children, mountNode }) => {
+export const Modal = ({ title, onClose, children, mountNode }) => {
+  const onModalClose = () => {
+    onClose();
+  };
+
   const onEscPress = useKeyPress('Escape');
 
   React.useEffect(() => {
     if (onEscPress) {
-      setVisibility(false);
+      onModalClose();
     }
   });
 
-  const onClose = () => {
-    setVisibility(false);
-  };
-
   const onClick = (event) => {
-    event.currentTarget === event.target && setVisibility(false);
+    event.currentTarget === event.target && onModalClose();
   };
 
   return ReactDOM.createPortal(
@@ -43,7 +43,7 @@ Modal.defaultProps = {
 
 Modal.propTypes = {
   title: PropTypes.string,
-  setVisibility: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   mountNode: PropTypes.instanceOf(HTMLElement)
 };
