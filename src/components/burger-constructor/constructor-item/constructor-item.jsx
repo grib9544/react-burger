@@ -1,7 +1,8 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import { removeIngredient } from '../../../services/slices/burger';
+import { removeIngredient, swapFillings } from '../../../services/slices/burger';
 import styles from './constructor-item.module.css';
 
 export const ConstructorItem = (props) => {
@@ -13,14 +14,35 @@ export const ConstructorItem = (props) => {
     dispatch(removeIngredient({ composId }));
   };
 
+  const handlerDrop = (targetId) => {
+    dispatch(
+      swapFillings({
+        currentId: composId,
+        targetId
+      })
+    );
+  };
+
+  const [, dragRef] = useDrag({
+    type: 'constr',
+    item: { composId }
+  });
+
+  const [, dropTarget] = useDrop({
+    accept: 'constr',
+    drop(item) {
+      handlerDrop(item.composId);
+    }
+  });
+
   return (
-    <div className={styles.item}>
+    <div className={styles.item} ref={!isLocked ? dropTarget : null}>
       {isLocked || (
         <div className={styles.item__icon}>
           <DragIcon />
         </div>
       )}
-      <div className={styles.item__element}>
+      <div className={styles.item__element} ref={!isLocked ? dragRef : null}>
         <ConstructorElement
           type={itemType}
           isLocked={isLocked}

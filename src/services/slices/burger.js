@@ -59,6 +59,21 @@ const burgerSlice = createSlice({
       );
 
       state.totalCost = calculateTotalCost(state.composition);
+    },
+    swapFillings: (state, action) => {
+      const fillingArray = state.composition.filling;
+
+      const currentIndex = fillingArray.findIndex(
+        (ing) => ing.composId === action.payload.currentId
+      );
+      const targetIndex = fillingArray.findIndex((ing) => ing.composId === action.payload.targetId);
+
+      [fillingArray[currentIndex], fillingArray[targetIndex]] = [
+        fillingArray[targetIndex],
+        fillingArray[currentIndex]
+      ];
+
+      state.composition.filling = fillingArray;
     }
   },
   extraReducers: {
@@ -97,6 +112,6 @@ const burgerSlice = createSlice({
   }
 });
 
-export const { setIngredient, removeIngredient } = burgerSlice.actions;
+export const { setIngredient, removeIngredient, swapFillings } = burgerSlice.actions;
 
 export default burgerSlice.reducer;
