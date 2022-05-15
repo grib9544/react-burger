@@ -1,17 +1,20 @@
 import { API_URL } from '../constants';
 import { FetchError } from '../error';
 
-function checkResponse(res) {
-  if (!res.ok || !res.success) {
+async function checkResponse(res) {
+  const data = await res.json();
+
+  if (!res.ok || !data.success) {
     throw new FetchError(res.message);
   }
+
+  return data;
 }
 
 export async function fetchIngredients() {
   const res = await fetch(`${API_URL}/api/ingredients`);
-  checkResponse(res);
 
-  const data = await res.json();
+  const data = await checkResponse(res);
   return data.data;
 }
 
@@ -26,9 +29,7 @@ export async function createOrder(ingredientsIds) {
     })
   });
 
-  checkResponse(res);
-
-  const data = await res.json();
+  const data = await checkResponse(res);
   return {
     orderId: data.order.number,
     name: data.name

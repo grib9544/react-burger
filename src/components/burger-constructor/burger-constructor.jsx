@@ -43,15 +43,15 @@ export const BurgerConstructor = () => {
       <section className={styles.constructor}>
         <div className={styles.constructor__list} ref={dropTarget}>
           {composition.bun && (
-            <ConstructorItem {...composition.bun} itemType="top" isLocked={true} />
+            <ConstructorItem ingredient={composition.bun} itemType="top" isLocked={true} />
           )}
           <div className={styles.constructor__scrollable}>
             {composition.filling.map((ing) => (
-              <ConstructorItem key={ing.composId} {...ing} />
+              <ConstructorItem key={ing.composId} ingredient={ing} />
             ))}
           </div>
           {composition.bun && (
-            <ConstructorItem {...composition.bun} itemType="bottom" isLocked={true} />
+            <ConstructorItem ingredient={composition.bun} itemType="bottom" isLocked={true} />
           )}
         </div>
         <div className={styles.constructor__order}>

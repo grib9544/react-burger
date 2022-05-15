@@ -1,9 +1,9 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setViewedIngredient, unsetViewedIngredient } from '../../../services/slices/burger';
+import { ingredientType } from '../../../types';
 import { IngredientDetails } from '../../ingredient-details/ingredient-details';
 import { Modal } from '../../modal/modal';
 import styles from './ingredient-card.module.css';
@@ -63,14 +63,4 @@ export const IngredientCard = (props) => {
   );
 };
 
-IngredientCard.propTypes = {
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired
-};
+IngredientCard.propTypes = ingredientType.isRequired;

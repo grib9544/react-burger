@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
 import { removeIngredient, swapFillings } from '../../../services/slices/burger';
+import { ingredientType } from '../../../types';
 import styles from './constructor-item.module.css';
 
 export const ConstructorItem = (props) => {
   const dispatch = useDispatch();
 
-  const { composId, itemType, isLocked, name, price, image } = props;
+  const { ingredient, isLocked, itemType } = props;
+  const { composId, name, price, image } = ingredient;
 
   const handleClose = () => {
     dispatch(removeIngredient({ composId }));
@@ -63,11 +65,8 @@ ConstructorItem.defaultProps = {
 };
 
 ConstructorItem.propTypes = {
-  _id: PropTypes.string.isRequired,
-  composId: PropTypes.string.isRequired,
+  ingredient: ingredientType.isRequired,
+  composId: PropTypes.string,
   itemType: PropTypes.oneOf(['top', 'bottom']),
-  isLocked: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired
+  isLocked: PropTypes.bool
 };
