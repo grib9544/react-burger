@@ -1,49 +1,72 @@
-import styles from './constructor-item.module.css'
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { ConstructorContext } from '../../../services/contexts/constructor';
-import { useContext } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
+import { useDispatch } from 'react-redux';
+import { removeIngredient, swapFillings } from '../../../services/slices/burger';
+import { ingredientType } from '../../../types';
+import styles from './constructor-item.module.css';
 
 export const ConstructorItem = (props) => {
-    const { constrDispatcher } = useContext(ConstructorContext)
+  const dispatch = useDispatch();
 
-    const { itemType, isLocked, name, price, image} = props
+  const { ingredient, isLocked, itemType } = props;
+  const { composId, name, price, image } = ingredient;
 
-    const handleClose = () => {
-        constrDispatcher({ type: 'REMOVE_INGREDIENT', payload: {...props} })
+  const handleClose = () => {
+    dispatch(removeIngredient({ composId }));
+  };
+
+  const handlerDrop = (targetId) => {
+    dispatch(
+      swapFillings({
+        currentId: composId,
+        targetId
+      })
+    );
+  };
+
+  const [, dragRef] = useDrag({
+    type: 'constr',
+    item: { composId }
+  });
+
+  const [, dropTarget] = useDrop({
+    accept: 'constr',
+    drop(item) {
+      handlerDrop(item.composId);
     }
+  });
 
-    return (
-        <div className={styles.item}>
-            { isLocked || (
-                <div className={styles.item__icon}>
-                    <DragIcon />
-                </div> 
-            )}
-            <div className={styles.item__element}>
-                <ConstructorElement
-                    type={itemType}
-                    isLocked={isLocked}
-                    text={name}
-                    price={price}
-                    thumbnail={image}
-                    handleClose={handleClose}
-                />
-            </div>
+  return (
+    <div ref={!isLocked ? dropTarget : null}>
+      <div className={styles.item} ref={!isLocked ? dragRef : null}>
+        {isLocked || (
+          <div className={styles.item__icon}>
+            <DragIcon />
+          </div>
+        )}
+        <div className={styles.item__element}>
+          <ConstructorElement
+            type={itemType}
+            isLocked={isLocked}
+            text={name}
+            price={price}
+            thumbnail={image}
+            handleClose={handleClose}
+          />
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 ConstructorItem.defaultProps = {
-    isLocked: false
-}
+  isLocked: false
+};
 
 ConstructorItem.propTypes = {
-    _id: PropTypes.string.isRequired,
-    constrId: PropTypes.string.isRequired,
-    itemType: PropTypes.oneOf(['top', 'bottom']),
-    isLocked: PropTypes.bool,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired
-}
+  ingredient: ingredientType.isRequired,
+  composId: PropTypes.string,
+  itemType: PropTypes.oneOf(['top', 'bottom']),
+  isLocked: PropTypes.bool
+};
