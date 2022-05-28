@@ -4,8 +4,9 @@ import {
   Logo,
   ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { APP_ROUTES } from '../../constants';
 import styles from './header.module.css';
-import { NavLink } from './nav-link/nav-link';
+import { HeaderLink } from './nav-link/header-link';
 
 export const AppHeader = () => {
   return (
@@ -13,14 +14,14 @@ export const AppHeader = () => {
       <nav className={styles.main_nav}>
         <ul className={`${styles['main_nav__list']} ${styles['main_nav__list--left']}`}>
           <li>
-            <NavLink href="/" Icon={BurgerIcon} type="primary">
+            <HeaderLink to={APP_ROUTES.ORDER} Icon={BurgerIcon}>
               Конструктор
-            </NavLink>
+            </HeaderLink>
           </li>
           <li>
-            <NavLink href="/" Icon={ListIcon}>
+            <HeaderLink to="/mock" Icon={ListIcon}>
               Лента заказов
-            </NavLink>
+            </HeaderLink>
           </li>
         </ul>
         <a href="/" className={styles.main_nav__logo}>
@@ -28,9 +29,9 @@ export const AppHeader = () => {
         </a>
         <ul className={`${styles['main_nav__list']} ${styles['main_nav__list--right']}`}>
           <li>
-            <NavLink href="/" Icon={ProfileIcon}>
+            <HeaderLink to="/mock1" Icon={ProfileIcon}>
               Личный кабинет
-            </NavLink>
+            </HeaderLink>
           </li>
         </ul>
       </nav>

@@ -2,10 +2,11 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_ROUTES } from '../../constants';
-import styles from './login.module.css';
+import styles from './register.module.css';
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
   const [form, setForm] = useState({
+    name: '',
     email: '',
     password: ''
   });
@@ -24,9 +25,18 @@ export const LoginPage = () => {
   };
 
   return (
-    <form className={styles.login_form} onSubmit={onSubmit}>
-      <h2 className="text text_type_main-medium pb-6">Вход</h2>
-      <div className={styles.login_form__input_container}>
+    <form className={styles.register_form} onSubmit={onSubmit}>
+      <h2 className="text text_type_main-medium pb-6">Регистрация</h2>
+      <div className={styles.register_form__input_container}>
+        <Input
+          name="name"
+          value={form.name}
+          placeholder="Имя"
+          type="text"
+          onChange={onInputChange}
+        />
+      </div>
+      <div className={styles.register_form__input_container}>
         <Input
           name="email"
           value={form.email}
@@ -35,24 +45,18 @@ export const LoginPage = () => {
           onChange={onInputChange}
         />
       </div>
-      <div className={styles.login_form__input_container}>
+      <div className={styles.register_form__input_container}>
         <PasswordInput name="password" value={form.password} onChange={onInputChange} />
       </div>
-      <div className={styles.login_form__button_container}>
+      <div className={styles.register_form__button_container}>
         <Button type="primary" size="medium">
-          Войти
+          Зарегистрироваться
         </Button>
       </div>
       <span className="text text_type_main-default text_color_inactive mb-4">
-        Вы — новый пользователь?{' '}
-        <Link to={APP_ROUTES.REGISTRATION} className={styles.login_form__link}>
-          Зарегистрироваться
-        </Link>
-      </span>
-      <span className="text text_type_main-default text_color_inactive">
-        Забыли пароль?{' '}
-        <Link to={APP_ROUTES.FORGOT_PASSWORD} className={styles.login_form__link}>
-          Восстановить пароль
+        Уже зарегестрированы?{' '}
+        <Link to={APP_ROUTES.LOGIN} className={styles.register_form__link}>
+          Войти
         </Link>
       </span>
     </form>
