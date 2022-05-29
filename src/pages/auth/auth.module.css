@@ -1,19 +1,19 @@
-.forgot_pass_form {
+.form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.forgot_pass_form__input_container {
+.input_container {
   margin-bottom: 24px;
 }
 
-.forgot_pass_form__button_container {
+.button_container {
   margin-bottom: 80px;
 }
 
-.forgot_pass_form__link {
+.link {
   font-size: 16px;
   color: #4c4cff;
   text-decoration: none;

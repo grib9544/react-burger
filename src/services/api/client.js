@@ -27,20 +27,23 @@ client.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
-      return axios
-        .post('/api/auth/refresh', {
-          refreshToken: session.refreshToken
+    if (error.response.data.message === 'jwt expired') {
+      return client
+        .post('/api/auth/token', {
+          token: session.refreshToken
         })
         .then((res) => {
           if (res.data.success) {
-            session.token = res.data.accessToken;
+            session.token = res.data.accessToken.split(' ')[1];
             session.refreshToken = res.data.refreshToken;
 
-            error.response.config.headers['Authorization'] = 'Bearer ' + res.data.refreshToken;
+            error.response.config.headers['Authorization'] = 'Bearer ' + res.data.token;
 
             return client(error.config);
           }
+        })
+        .catch(() => {
+          window.location.href = '/login';
         });
     }
 

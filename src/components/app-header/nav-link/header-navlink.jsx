@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import styles from './header-link.module.css';
+import styles from './header-navlink.module.css';
 
-export const HeaderLink = ({ Icon, to, children }) => {
+export const HeaderNavLink = ({ Icon, to, children }) => {
   return (
     <NavLink exact to={to} className={styles.nav_link} activeClassName={styles.nav_link_active}>
       <span className={styles.nav_link__logo}>
@@ -13,11 +13,11 @@ export const HeaderLink = ({ Icon, to, children }) => {
   );
 };
 
-HeaderLink.defaultProps = {
+HeaderNavLink.defaultProps = {
   type: 'secondary'
 };
 
-HeaderLink.propTypes = {
+HeaderNavLink.propTypes = {
   Icon: PropTypes.elementType,
   to: PropTypes.string.isRequired,
   children: PropTypes.string.isRequired

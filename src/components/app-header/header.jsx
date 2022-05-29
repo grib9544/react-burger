@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { APP_ROUTES } from '../../constants';
 import styles from './header.module.css';
-import { HeaderLink } from './nav-link/header-link';
+import { HeaderNavLink } from './nav-link/header-navlink';
 
 export const AppHeader = () => {
   return (
@@ -14,14 +14,14 @@ export const AppHeader = () => {
       <nav className={styles.main_nav}>
         <ul className={`${styles['main_nav__list']} ${styles['main_nav__list--left']}`}>
           <li>
-            <HeaderLink to={APP_ROUTES.ORDER} Icon={BurgerIcon}>
+            <HeaderNavLink to={APP_ROUTES.ORDER} Icon={BurgerIcon}>
               Конструктор
-            </HeaderLink>
+            </HeaderNavLink>
           </li>
           <li>
-            <HeaderLink to="/mock" Icon={ListIcon}>
+            <HeaderNavLink to="/mock" Icon={ListIcon}>
               Лента заказов
-            </HeaderLink>
+            </HeaderNavLink>
           </li>
         </ul>
         <a href="/" className={styles.main_nav__logo}>
@@ -29,9 +29,9 @@ export const AppHeader = () => {
         </a>
         <ul className={`${styles['main_nav__list']} ${styles['main_nav__list--right']}`}>
           <li>
-            <HeaderLink to="/mock1" Icon={ProfileIcon}>
+            <HeaderNavLink to={APP_ROUTES.PROFILE} Icon={ProfileIcon}>
               Личный кабинет
-            </HeaderLink>
+            </HeaderNavLink>
           </li>
         </ul>
       </nav>

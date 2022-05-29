@@ -1,14 +1,22 @@
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { Error } from '../../components/error/error';
 import { APP_ROUTES } from '../../constants';
-import styles from './register.module.css';
+import { signUpThunk } from '../../services/slices/auth';
+import { fetchUserThunk } from '../../services/slices/user';
+import styles from './auth.module.css';
 
 export const RegisterPage = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const [form, setForm] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    error: null
   });
 
   const onInputChange = (event) => {
@@ -21,13 +29,36 @@ export const RegisterPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(form);
+
+    setForm({
+      ...form,
+      error: null
+    });
+
+    dispatch(
+      signUpThunk({
+        email: form.email,
+        password: form.password,
+        name: form.name
+      })
+    )
+      .unwrap()
+      .then(() => {
+        dispatch(fetchUserThunk());
+        history.replace(APP_ROUTES.ORDER);
+      })
+      .catch((error) => {
+        setForm({
+          ...form,
+          error: error.message
+        });
+      });
   };
 
   return (
-    <form className={styles.register_form} onSubmit={onSubmit}>
+    <form className={styles.form} onSubmit={onSubmit}>
       <h2 className="text text_type_main-medium pb-6">Регистрация</h2>
-      <div className={styles.register_form__input_container}>
+      <div className={styles.input_container}>
         <Input
           name="name"
           value={form.name}
@@ -36,7 +67,7 @@ export const RegisterPage = () => {
           onChange={onInputChange}
         />
       </div>
-      <div className={styles.register_form__input_container}>
+      <div className={styles.input_container}>
         <Input
           name="email"
           value={form.email}
@@ -45,17 +76,18 @@ export const RegisterPage = () => {
           onChange={onInputChange}
         />
       </div>
-      <div className={styles.register_form__input_container}>
+      <div className={styles.input_container}>
         <PasswordInput name="password" value={form.password} onChange={onInputChange} />
       </div>
-      <div className={styles.register_form__button_container}>
+      {form.error && <Error>{form.error}</Error>}
+      <div className={styles.button_container}>
         <Button type="primary" size="medium">
           Зарегистрироваться
         </Button>
       </div>
       <span className="text text_type_main-default text_color_inactive mb-4">
         Уже зарегестрированы?{' '}
-        <Link to={APP_ROUTES.LOGIN} className={styles.register_form__link}>
+        <Link to={APP_ROUTES.LOGIN} className={styles.link}>
           Войти
         </Link>
       </span>
