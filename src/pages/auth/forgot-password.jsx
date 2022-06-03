@@ -27,7 +27,10 @@ export const ForgotPasswordPage = () => {
     dispatch(forgotPasswordThunk(form.email))
       .unwrap()
       .then(() => {
-        history.push(APP_ROUTES.RESET_PASSWORD);
+        history.push({
+          pathname: APP_ROUTES.RESET_PASSWORD,
+          state: { fromForgot: true }
+        });
       })
       .catch((error) => {
         setForm({

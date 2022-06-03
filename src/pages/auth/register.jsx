@@ -1,7 +1,7 @@
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Error } from '../../components/error/error';
 import { APP_ROUTES } from '../../constants';
 import { signUpThunk } from '../../services/slices/auth';
@@ -10,6 +10,7 @@ import styles from './auth.module.css';
 
 export const RegisterPage = () => {
   const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({
@@ -45,7 +46,7 @@ export const RegisterPage = () => {
       .unwrap()
       .then(() => {
         dispatch(fetchUserThunk());
-        history.replace(APP_ROUTES.ORDER);
+        history.replace(location.state.from && APP_ROUTES.ORDER);
       })
       .catch((error) => {
         setForm({

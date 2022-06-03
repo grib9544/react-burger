@@ -6,9 +6,9 @@ export async function getUser() {
   return data;
 }
 
-export async function patchUser(name, value) {
+export async function patchUser(params) {
   const { data } = await client.patch('/api/auth/user', {
-    [name]: value
+    [params.name]: params.value
   });
 
   return data;

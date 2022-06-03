@@ -1,3 +1,4 @@
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { patchUserThunk } from '../../../services/slices/user';
@@ -6,12 +7,17 @@ export const ProfileUserForm = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '******'
+  });
 
   useEffect(() => {
     setForm({
       name: user.name,
-      email: user.email
+      email: user.email,
+      password: '******'
     });
   }, [user]);
 
@@ -23,11 +29,14 @@ export const ProfileUserForm = () => {
     }
 
     if (editedField === field) {
-      console.log(field, form[field]);
       dispatch(patchUserThunk({ name: field, value: form[field] }))
         .unwrap()
         .then(() => {
           setEditedField(null);
+
+          if (field === 'password') {
+            setForm({ ...form, password: '******' });
+          }
         })
         .catch((error) => {
           setForm({
@@ -46,7 +55,7 @@ export const ProfileUserForm = () => {
   return (
     <form>
       <div className="mb-6">
-        {/* <Input
+        <Input
           name="name"
           type="text"
           placeholder="Имя"
@@ -57,14 +66,36 @@ export const ProfileUserForm = () => {
             onIconClick('name');
           }}
           onChange={onInputChange}
-        /> */}
-      </div>
-      {/* <div className="mb-6">
-        <Input name="email" type="email" placeholder="E-mail" />
+        />
       </div>
       <div className="mb-6">
-        <Input name="password" type="password" placeholder="Пароль" />
-      </div> */}
+        <Input
+          name="email"
+          type="text"
+          placeholder="Логин"
+          value={form.email}
+          disabled={editedField !== 'email'}
+          icon={editedField === 'email' ? 'CloseIcon' : 'EditIcon'}
+          onIconClick={() => {
+            onIconClick('email');
+          }}
+          onChange={onInputChange}
+        />
+      </div>
+      <div className="mb-6">
+        <Input
+          name="password"
+          type="text"
+          placeholder="Пароль"
+          value={form.password}
+          disabled={editedField !== 'password'}
+          icon={editedField === 'password' ? 'CloseIcon' : 'EditIcon'}
+          onIconClick={() => {
+            onIconClick('password');
+          }}
+          onChange={onInputChange}
+        />
+      </div>
     </form>
   );
 };

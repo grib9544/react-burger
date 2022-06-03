@@ -1,7 +1,7 @@
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Error } from '../../components/error/error';
 import { APP_ROUTES } from '../../constants';
 import { resetPasswordThunk } from '../../services/slices/auth';
@@ -10,6 +10,7 @@ import styles from './auth.module.css';
 export const ResetPasswordPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [form, setForm] = useState({ password: '', token: '', error: null });
 
@@ -36,6 +37,10 @@ export const ResetPasswordPage = () => {
         });
       });
   };
+
+  if (!location.state?.fromForgot) {
+    history.replace(APP_ROUTES.FORGOT_PASSWORD);
+  }
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>

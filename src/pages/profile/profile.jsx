@@ -5,6 +5,7 @@ import { signOutThunk } from '../../services/slices/auth';
 import { resetUser } from '../../services/slices/user';
 import { ProfileNavLink } from './components/profile-navlink';
 import styles from './profile.module.css';
+import { ProfileOrders } from './routes/orders';
 import { ProfileUserForm } from './routes/profile';
 
 export const ProfilePage = () => {
@@ -26,7 +27,7 @@ export const ProfilePage = () => {
       <div>
         <div className={styles.profile_nav}>
           <ProfileNavLink to={APP_ROUTES.PROFILE}>Профиль</ProfileNavLink>
-          <ProfileNavLink to="/mock1">История заказов</ProfileNavLink>
+          <ProfileNavLink to="/profile/orders/1">История заказов</ProfileNavLink>
           <span className={styles.profile_nav__logout_btn} onClick={onSignOut}>
             Выход
           </span>
@@ -39,6 +40,9 @@ export const ProfilePage = () => {
         <Switch>
           <Route path={APP_ROUTES.PROFILE} exact={true}>
             <ProfileUserForm />
+          </Route>
+          <Route path={APP_ROUTES.PROFILE_ORDERS} exact={true}>
+            <ProfileOrders />
           </Route>
         </Switch>
       </div>

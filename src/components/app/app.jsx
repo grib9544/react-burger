@@ -10,8 +10,12 @@ import {
   ResetPasswordPage,
   SignInPage
 } from '../../pages';
+import { fetchIngredientsThunk } from '../../services/slices/burger';
 import { fetchUserThunk } from '../../services/slices/user';
 import { AppHeader } from '../app-header/header';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { Modal } from '../modal/modal';
+import { ProtectedRoute } from '../protected-route/protected-route';
 import styles from './app.module.css';
 
 export const App = () => {
@@ -22,7 +26,11 @@ export const App = () => {
     dispatch(fetchUserThunk());
   }, []);
 
-  const background = location.state && location.state.background;
+  useEffect(() => {
+    dispatch(fetchIngredientsThunk());
+  }, []);
+
+  const background = location.state?.background;
 
   return (
     <>
@@ -30,25 +38,38 @@ export const App = () => {
       <div className={styles.container}>
         <main className={styles.main}>
           <Switch location={background || location}>
-            <Route path={APP_ROUTES.LOGIN} exact={true}>
+            <ProtectedRoute path={APP_ROUTES.LOGIN}>
               <SignInPage />
-            </Route>
-            <Route path={APP_ROUTES.REGISTRATION} exact={true}>
+            </ProtectedRoute>
+            <ProtectedRoute path={APP_ROUTES.REGISTRATION}>
               <RegisterPage />
-            </Route>
-            <Route path={APP_ROUTES.FORGOT_PASSWORD} exact={true}>
+            </ProtectedRoute>
+            <ProtectedRoute path={APP_ROUTES.FORGOT_PASSWORD}>
               <ForgotPasswordPage />
-            </Route>
-            <Route path={APP_ROUTES.RESET_PASSWORD} exact={true}>
+            </ProtectedRoute>
+            <ProtectedRoute path={APP_ROUTES.RESET_PASSWORD}>
               <ResetPasswordPage />
-            </Route>
-            <Route path={APP_ROUTES.ORDER} exact={true}>
+            </ProtectedRoute>
+            <Route path={APP_ROUTES.ORDER} exact>
               <OrderPage />
             </Route>
-            <Route path={APP_ROUTES.PROFILE} exact={true}>
+            <Route path={APP_ROUTES.INGREDIENT_DEATILS} exact>
+              <IngredientDetails />
+            </Route>
+            <ProtectedRoute path={APP_ROUTES.PROFILE} isAuth>
               <ProfilePage />
+            </ProtectedRoute>
+            <Route>
+              <h1>404 Not Found</h1>
             </Route>
           </Switch>
+          {background && (
+            <Route path={APP_ROUTES.INGREDIENT_DEATILS} exact>
+              <Modal title="Детали ингредиента">
+                <IngredientDetails />
+              </Modal>
+            </Route>
+          )}
         </main>
       </div>
     </>

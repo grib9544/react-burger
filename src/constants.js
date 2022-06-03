@@ -6,5 +6,7 @@ export const APP_ROUTES = {
   REGISTRATION: '/register',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
-  PROFILE: '/profile'
+  PROFILE: '/profile',
+  PROFILE_ORDERS: '/profile/orders/:id',
+  INGREDIENT_DEATILS: '/ingredients/:id'
 };

@@ -2,6 +2,8 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { APP_ROUTES } from '../../constants';
 import { createOrderThunk, setIngredient } from '../../services/slices/burger';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
@@ -9,8 +11,10 @@ import styles from './burger-constructor.module.css';
 import { ConstructorItem } from './constructor-item/constructor-item';
 
 export const BurgerConstructor = () => {
+  const location = useLocation();
+  const history = useHistory();
   const dispatch = useDispatch();
-  const { composition, totalCost, order } = useSelector((state) => state.burger);
+  const { burger, user } = useSelector((state) => state);
 
   const [visibility, setVisibility] = React.useState(false);
 
@@ -19,8 +23,12 @@ export const BurgerConstructor = () => {
   };
 
   const onOrder = () => {
-    dispatch(createOrderThunk());
-    setVisibility(true);
+    if (user.email) {
+      dispatch(createOrderThunk());
+      setVisibility(true);
+    } else {
+      history.push({ pathname: APP_ROUTES.LOGIN, state: { from: location.pathname } });
+    }
   };
 
   const [, dropTarget] = useDrop({
@@ -35,31 +43,35 @@ export const BurgerConstructor = () => {
 
   return (
     <>
-      {visibility && !order.loading && (
-        <Modal onClose={onClose}>
-          <OrderDetails orderId={order.orderId} />
+      {visibility && !burger.order.loading && (
+        <Modal>
+          <OrderDetails orderId={burger.order.orderId} />
         </Modal>
       )}
       <section className={styles.constructor}>
         <div className={styles.constructor__list} ref={dropTarget}>
-          {composition.bun && (
-            <ConstructorItem ingredient={composition.bun} itemType="top" isLocked={true} />
+          {burger.composition.bun && (
+            <ConstructorItem ingredient={burger.composition.bun} itemType="top" isLocked={true} />
           )}
           <div className={styles.constructor__scrollable}>
-            {composition.filling.map((ing) => (
+            {burger.composition.filling.map((ing) => (
               <ConstructorItem key={ing.composId} ingredient={ing} />
             ))}
           </div>
-          {composition.bun && (
-            <ConstructorItem ingredient={composition.bun} itemType="bottom" isLocked={true} />
+          {burger.composition.bun && (
+            <ConstructorItem
+              ingredient={burger.composition.bun}
+              itemType="bottom"
+              isLocked={true}
+            />
           )}
         </div>
         <div className={styles.constructor__order}>
           <div className={styles.price}>
-            <span className="text text_type_digits-medium">{totalCost}</span>
+            <span className="text text_type_digits-medium">{burger.totalCost}</span>
             <CurrencyIcon />
           </div>
-          <Button type="primary" size="medium" onClick={onOrder} disabled={!composition.bun}>
+          <Button type="primary" size="medium" onClick={onOrder} disabled={!burger.composition.bun}>
             Оформить заказ
           </Button>
         </div>
