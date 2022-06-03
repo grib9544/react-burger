@@ -36,8 +36,7 @@ const authSlice = createSlice({
       session.refreshToken = action.payload.refreshToken;
     },
     [signOutThunk.fulfilled]: () => {
-      session.token = null;
-      session.refreshToken = null;
+      session.reset();
     }
   }
 });
