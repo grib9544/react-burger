@@ -4,6 +4,7 @@ import {
   Logo,
   ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 import { APP_ROUTES } from '../../constants';
 import styles from './header.module.css';
 import { HeaderNavLink } from './nav-link/header-navlink';
@@ -24,9 +25,9 @@ export const AppHeader = () => {
             </HeaderNavLink>
           </li>
         </ul>
-        <a href="/" className={styles.main_nav__logo}>
+        <Link to={APP_ROUTES.ORDER} className={styles.main_nav__logo}>
           <Logo />
-        </a>
+        </Link>
         <ul className={`${styles['main_nav__list']} ${styles['main_nav__list--right']}`}>
           <li>
             <HeaderNavLink to={APP_ROUTES.PROFILE} Icon={ProfileIcon}>
