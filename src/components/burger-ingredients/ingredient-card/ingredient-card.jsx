@@ -2,12 +2,10 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import { ingredientType } from '../../../types';
 import styles from './ingredient-card.module.css';
 
 export const IngredientCard = (props) => {
-  const location = useLocation();
   const { composition } = useSelector((state) => state.burger);
 
   const [count, setCount] = useState(0);

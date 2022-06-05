@@ -18,10 +18,6 @@ export const BurgerConstructor = () => {
 
   const [visibility, setVisibility] = React.useState(false);
 
-  const onClose = () => {
-    setVisibility(false);
-  };
-
   const onOrder = () => {
     if (user.email) {
       dispatch(createOrderThunk());
@@ -44,7 +40,7 @@ export const BurgerConstructor = () => {
   return (
     <>
       {visibility && !burger.order.loading && (
-        <Modal>
+        <Modal onClose={() => setVisibility(false)}>
           <OrderDetails orderId={burger.order.orderId} />
         </Modal>
       )}

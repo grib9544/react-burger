@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { APP_ROUTES } from '../../constants';
 import {
   ForgotPasswordPage,
@@ -21,6 +21,7 @@ import styles from './app.module.css';
 export const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(fetchUserThunk());
@@ -65,7 +66,7 @@ export const App = () => {
           </Switch>
           {background && (
             <Route path={APP_ROUTES.INGREDIENT_DEATILS} exact>
-              <Modal title="Детали ингредиента">
+              <Modal title="Детали ингредиента" onClose={() => history.goBack()}>
                 <IngredientDetails />
               </Modal>
             </Route>

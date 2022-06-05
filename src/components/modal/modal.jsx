@@ -2,16 +2,13 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useHistory } from 'react-router-dom';
 import { useKeyPress } from '../../hooks';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
-export const Modal = ({ title, children, mountNode }) => {
-  const history = useHistory();
-
+export const Modal = ({ title, children, onClose, mountNode }) => {
   const onModalClose = () => {
-    history.goBack();
+    onClose();
   };
 
   const onEscPress = useKeyPress('Escape');
@@ -47,5 +44,6 @@ Modal.defaultProps = {
 Modal.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired,
   mountNode: PropTypes.instanceOf(HTMLElement)
 };
