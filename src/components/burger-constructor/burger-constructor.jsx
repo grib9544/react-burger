@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { APP_ROUTES } from '../../constants';
 import { createOrderThunk, setIngredient } from '../../services/slices/burger';
+import { Loader } from '../loader/loader';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import styles from './burger-constructor.module.css';
@@ -20,8 +21,8 @@ export const BurgerConstructor = () => {
 
   const onOrder = () => {
     if (user.email) {
-      dispatch(createOrderThunk());
       setVisibility(true);
+      dispatch(createOrderThunk());
     } else {
       history.push({ pathname: APP_ROUTES.LOGIN, state: { from: location.pathname } });
     }
@@ -68,7 +69,7 @@ export const BurgerConstructor = () => {
             <CurrencyIcon />
           </div>
           <Button type="primary" size="medium" onClick={onOrder} disabled={!burger.composition.bun}>
-            Оформить заказ
+            {burger.order.loading ? <Loader /> : 'Оформить заказ'}
           </Button>
         </div>
       </section>
