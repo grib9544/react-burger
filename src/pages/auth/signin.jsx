@@ -43,8 +43,11 @@ export const SignInPage = () => {
     )
       .unwrap()
       .then(() => {
-        dispatch(fetchUserThunk());
-        history.replace(location.state.from && APP_ROUTES.ORDER);
+        dispatch(fetchUserThunk())
+          .unwrap()
+          .then(() => {
+            history.replace(location.state?.from || APP_ROUTES.ORDER);
+          });
       })
       .catch((error) => {
         setForm({
@@ -79,7 +82,10 @@ export const SignInPage = () => {
       </div>
       <span className="text text_type_main-default text_color_inactive mb-4">
         Вы — новый пользователь?{' '}
-        <Link to={APP_ROUTES.REGISTRATION} className={styles.link}>
+        <Link
+          to={{ pathname: APP_ROUTES.REGISTRATION, state: location.state }}
+          state={location.state}
+          className={styles.link}>
           Зарегистрироваться
         </Link>
       </span>

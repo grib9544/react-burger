@@ -45,8 +45,11 @@ export const RegisterPage = () => {
     )
       .unwrap()
       .then(() => {
-        dispatch(fetchUserThunk());
-        history.replace(location.state.from && APP_ROUTES.ORDER);
+        dispatch(fetchUserThunk())
+          .unwrap()
+          .then(() => {
+            history.replace(location.state?.from || APP_ROUTES.ORDER);
+          });
       })
       .catch((error) => {
         setForm({
