@@ -1,0 +1,7 @@
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+  overflow-y: inherit;
+  padding-bottom: 40px;
+}

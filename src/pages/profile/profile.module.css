@@ -1,0 +1,30 @@
+.profile_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 60px;
+}
+
+.profile_nav {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 80px;
+}
+
+.profile_nav__logout_btn {
+  cursor: pointer;
+  font-size: 24px;
+  color: #8585ad;
+}
+
+.profile_data {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.profile_info_text {
+  font-size: 16px;
+  color: #8585ad;
+  opacity: 0.4;
+}

@@ -9,6 +9,14 @@
   color: #f2f2f3;
 }
 
+.nav_link svg {
+  fill: #8585ad;
+}
+
+.nav_link.nav_link_active svg {
+  fill: #f2f2f3;
+}
+
 .nav_link__logo {
   vertical-align: middle;
   margin-right: 8px;

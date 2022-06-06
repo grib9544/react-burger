@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.input_container {
+  margin-bottom: 24px;
+}
+
+.button_container {
+  margin-bottom: 80px;
+}
+
+.link {
+  font-size: 16px;
+  color: #4c4cff;
+  text-decoration: none;
+}

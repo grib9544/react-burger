@@ -1,0 +1,8 @@
+.nav_link {
+  font-size: 24px;
+  color: #8585ad;
+}
+
+.nav_link_active {
+  color: #f2f2f3;
+}

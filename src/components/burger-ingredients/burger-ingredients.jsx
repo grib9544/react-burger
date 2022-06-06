@@ -1,6 +1,7 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { createRef, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from '../../hooks/useDebounce';
 import styles from './burger-ingredients.module.css';
 import { IngredientCard } from './ingredient-card/ingredient-card';
@@ -12,6 +13,7 @@ const ingredientNameMap = {
 };
 
 export const BurgerIngredients = () => {
+  const location = useLocation();
   const [current, setCurrent] = React.useState('bun');
 
   const ingredientsItems = useSelector((state) => state.burger.ingredients.items);
@@ -89,9 +91,16 @@ export const BurgerIngredients = () => {
             </h2>
             <ul className={styles.ingredients__list}>
               {ingredients.map((ing) => (
-                <li key={ing._id}>
-                  <IngredientCard {...ing} />
-                </li>
+                <Link
+                  key={ing._id}
+                  to={{
+                    pathname: `/ingredients/${ing._id}`,
+                    state: { background: location }
+                  }}>
+                  <li>
+                    <IngredientCard {...ing} />
+                  </li>
+                </Link>
               ))}
             </ul>
           </div>

@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { randomAlphaNumeric } from '../../utils';
-import { createOrder, fetchIngredients } from '../api';
+import { createOrder, getIngredients } from '../api';
 
 function calculateTotalCost(burger) {
   return burger.filling.reduce((acc, curr) => acc + curr.price, 0) + (burger.bun?.price || 0) * 2;
 }
 
 export const fetchIngredientsThunk = createAsyncThunk('burger/fetchIngredients', async () => {
-  return fetchIngredients();
+  return getIngredients();
 });
 
 export const createOrderThunk = createAsyncThunk('burger/createOrder', async (_, thunkAPI) => {

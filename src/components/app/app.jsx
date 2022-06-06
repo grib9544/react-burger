@@ -1,39 +1,78 @@
-import React from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { APP_ROUTES } from '../../constants';
+import {
+  ForgotPasswordPage,
+  OrderPage,
+  ProfilePage,
+  RegisterPage,
+  ResetPasswordPage,
+  SignInPage
+} from '../../pages';
 import { fetchIngredientsThunk } from '../../services/slices/burger';
+import { fetchUserThunk } from '../../services/slices/user';
 import { AppHeader } from '../app-header/header';
-import { BurgerConstructor } from '../burger-constructor/burger-constructor';
-import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { Modal } from '../modal/modal';
+import { ProtectedRoute } from '../protected-route/protected-route';
 import styles from './app.module.css';
 
 export const App = () => {
-  const ingredients = useSelector((state) => state.burger.ingredients);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    dispatch(fetchUserThunk());
+  }, []);
+
+  useEffect(() => {
     dispatch(fetchIngredientsThunk());
   }, []);
+
+  const background = location.state?.background;
 
   return (
     <>
       <AppHeader />
-      <main className={styles.main}>
-        {ingredients.loading && <div className="text text_type_main-large">Загрузка...</div>}
-        {ingredients.error && <div className="text text_type_main-large">{ingredients.error}</div>}
-        {!!ingredients.items.length && (
-          <>
-            <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-            <div className={styles.main__content}>
-              <DndProvider backend={HTML5Backend}>
-                <BurgerIngredients />
-                <BurgerConstructor />
-              </DndProvider>
-            </div>
-          </>
-        )}
-      </main>
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <Switch location={background || location}>
+            <ProtectedRoute path={APP_ROUTES.LOGIN}>
+              <SignInPage />
+            </ProtectedRoute>
+            <ProtectedRoute path={APP_ROUTES.REGISTRATION}>
+              <RegisterPage />
+            </ProtectedRoute>
+            <ProtectedRoute path={APP_ROUTES.FORGOT_PASSWORD}>
+              <ForgotPasswordPage />
+            </ProtectedRoute>
+            <ProtectedRoute path={APP_ROUTES.RESET_PASSWORD}>
+              <ResetPasswordPage />
+            </ProtectedRoute>
+            <Route path={APP_ROUTES.ORDER} exact>
+              <OrderPage />
+            </Route>
+            <Route path={APP_ROUTES.INGREDIENT_DEATILS} exact>
+              <IngredientDetails />
+            </Route>
+            <ProtectedRoute path={APP_ROUTES.PROFILE} isAuth>
+              <ProfilePage />
+            </ProtectedRoute>
+            <Route>
+              <h1>404 Not Found</h1>
+            </Route>
+          </Switch>
+          {background && (
+            <Route path={APP_ROUTES.INGREDIENT_DEATILS} exact>
+              <Modal title="Детали ингредиента" onClose={() => history.goBack()}>
+                <IngredientDetails />
+              </Modal>
+            </Route>
+          )}
+        </main>
+      </div>
     </>
   );
 };
