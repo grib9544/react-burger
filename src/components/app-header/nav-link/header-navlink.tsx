@@ -7,11 +7,16 @@ type THeaderNavLinkProps = {
   Icon: ({ type }: TIconProps) => JSX.Element;
   to: string;
   children: ReactNode;
+  exact?: boolean;
 };
 
-export const HeaderNavLink: FC<THeaderNavLinkProps> = ({ Icon, to, children }) => {
+export const HeaderNavLink: FC<THeaderNavLinkProps> = ({ Icon, to, children, exact = true }) => {
   return (
-    <NavLink exact to={to} className={styles.nav_link} activeClassName={styles.nav_link_active}>
+    <NavLink
+      exact={exact}
+      to={to}
+      className={styles.nav_link}
+      activeClassName={styles.nav_link_active}>
       <span className={styles.nav_link__logo}>
         <Icon type={'secondary'} />
       </span>

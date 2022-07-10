@@ -1,0 +1,26 @@
+.order_stats {
+  display: flex;
+  flex-direction: column;
+}
+
+.order_stats__orders {
+  display: flex;
+  gap: 36px;
+  margin-bottom: 32px;
+}
+
+.order_board {
+  display: flex;
+  flex-direction: column;
+}
+
+.order_board__list__done,
+.order_board__list__in_progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order_board__list__done > li {
+  color: var(--colors-interface-success);
+}

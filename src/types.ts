@@ -29,6 +29,16 @@ export interface IIngredient {
   price: number;
   image: string;
   image_large: string;
+  image_mobile: string;
+}
+
+export interface IOrder {
+  _id: string;
+  name: string;
+  status: 'created' | 'pending' | 'done';
+  number: number;
+  ingredients: string[];
+  createdAt: string;
 }
 
 export interface IComposeIngredient extends IIngredient {

@@ -10,12 +10,14 @@ import {
   ResetPasswordPage,
   SignInPage
 } from '../../pages';
+import { OrderFeed } from '../../pages/order-feed/order-feed';
 import { fetchIngredientsThunk } from '../../services/slices/burger';
 import { fetchUserThunk } from '../../services/slices/user';
 import { TAppDispatch, TLocation } from '../../types';
 import { AppHeader } from '../app-header/header';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
+import { OrderInfo } from '../order-info/order-info';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import styles from './app.module.css';
 
@@ -58,17 +60,37 @@ export const App = () => {
             <Route path={APP_ROUTES.INGREDIENT_DEATILS} exact>
               <IngredientDetails />
             </Route>
-            <ProtectedRoute path={APP_ROUTES.PROFILE} isAuth>
+            <Route path={APP_ROUTES.ORDER_INFO} exact>
+              <OrderInfo />
+            </Route>
+            <ProtectedRoute path={APP_ROUTES.PROFILE} exact={false} isAuth>
               <ProfilePage />
             </ProtectedRoute>
+            <Route path={APP_ROUTES.ORDER_FEED} exact>
+              <OrderFeed />
+            </Route>
             <Route>
               <h1>404 Not Found</h1>
             </Route>
           </Switch>
-          {background && (
+          {background && background.pathname === '/' && (
             <Route path={APP_ROUTES.INGREDIENT_DEATILS} exact>
               <Modal title="Детали ингредиента" onClose={() => history.goBack()}>
                 <IngredientDetails />
+              </Modal>
+            </Route>
+          )}
+          {background && background.pathname === '/feed' && (
+            <Route path={APP_ROUTES.ORDER_INFO} exact>
+              <Modal onClose={() => history.goBack()}>
+                <OrderInfo />
+              </Modal>
+            </Route>
+          )}
+          {background && background.pathname === '/profile/orders' && (
+            <Route path={APP_ROUTES.PROFILE_ORDER_INFO} exact>
+              <Modal onClose={() => history.goBack()}>
+                <OrderInfo />
               </Modal>
             </Route>
           )}
