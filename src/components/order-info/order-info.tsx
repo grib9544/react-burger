@@ -2,9 +2,10 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import moment from 'moment';
 import 'moment/locale/ru';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { TRootState } from '../../types';
+import { connectStart, connectStop } from '../../services/slices/orders';
+import { TAppDispatch, TRootState } from '../../types';
 import styles from './order-info.module.css';
 
 type TRouteParams = {
@@ -13,6 +14,14 @@ type TRouteParams = {
 
 export const OrderInfo: FC = () => {
   const { id } = useParams<TRouteParams>();
+  const dispatch = useDispatch<TAppDispatch>();
+
+  useEffect(() => {
+    dispatch(connectStart());
+    return () => {
+      dispatch(connectStop());
+    };
+  }, []);
 
   const { items } = useSelector((state: TRootState) => state.burger.ingredients);
 

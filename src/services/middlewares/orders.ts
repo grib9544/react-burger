@@ -29,7 +29,7 @@ export const orderMiddleware = (
       const { type } = action;
       const { onMessage, onOpen, onClose } = wsActions;
 
-      if (!socket) {
+      if (!socket && type === onOpen.type) {
         if (withToken) {
           const { token } = session;
           socket = new WebSocket(`${wsURL}?token=${token}`);
@@ -38,8 +38,9 @@ export const orderMiddleware = (
         }
       }
 
-      if (type === onClose.type) {
+      if (socket && type === onClose.type) {
         socket && socket.close(1000, 'CLOSE_NORMAL');
+        socket = null;
       }
 
       if (socket) {
