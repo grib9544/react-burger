@@ -21,7 +21,7 @@ export const AppHeader: FC = () => {
             </HeaderNavLink>
           </li>
           <li>
-            <HeaderNavLink to="/mock" Icon={ListIcon}>
+            <HeaderNavLink to={APP_ROUTES.ORDER_FEED} Icon={ListIcon}>
               Лента заказов
             </HeaderNavLink>
           </li>
@@ -31,7 +31,7 @@ export const AppHeader: FC = () => {
         </Link>
         <ul className={`${styles['main_nav__list']} ${styles['main_nav__list--right']}`}>
           <li>
-            <HeaderNavLink to={APP_ROUTES.PROFILE} Icon={ProfileIcon}>
+            <HeaderNavLink to={APP_ROUTES.PROFILE} Icon={ProfileIcon} exact={false}>
               Личный кабинет
             </HeaderNavLink>
           </li>

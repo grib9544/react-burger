@@ -8,15 +8,21 @@ type TProtectedRouteProps = {
   path: APP_ROUTES;
   isAuth?: boolean;
   children: React.ReactNode;
+  exact?: boolean;
 };
 
-export const ProtectedRoute: FC<TProtectedRouteProps> = ({ path, isAuth, children }) => {
+export const ProtectedRoute: FC<TProtectedRouteProps> = ({
+  path,
+  isAuth,
+  children,
+  exact = true
+}) => {
   // FIXME: fix when store will be changed to ts
   const user = useSelector((state: TRootState) => state.user);
   const location = useLocation();
 
   return (
-    <Route path={path} exact>
+    <Route path={path} exact={exact}>
       {(isAuth && user.email) || (!isAuth && !user.email) ? (
         children
       ) : (

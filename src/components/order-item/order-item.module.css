@@ -1,0 +1,61 @@
+.order_item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 24px;
+  background-color: var(--background);
+  border-radius: var(--common-border-radius-s);
+  cursor: pointer;
+  color: white;
+}
+
+.order_item__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.order_item__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.order_item__ingredients {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingredient_icon_wrapper {
+  max-width: 64px;
+  display: inline-block;
+  position: relative;
+  background: #131316;
+  border-radius: 200px;
+  border-color: #801ab2;
+  border-style: solid;
+  margin-right: -16px;
+}
+
+.ingredient_icon {
+  height: 57px;
+  background: var(--background);
+  border-radius: 200px;
+  box-sizing: border-box;
+  position: relative;
+  top: 2px;
+  left: -26px;
+  padding: 4px;
+  clip-path: circle(30px at center);
+}
+
+.ingredients_list {
+  display: flex;
+  max-height: 64px;
+}
+
+.order_price {
+  display: flex;
+  gap: 4px;
+  padding-bottom: 4px;
+}

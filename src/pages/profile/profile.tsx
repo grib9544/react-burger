@@ -29,7 +29,7 @@ export const ProfilePage: FC = () => {
       <div>
         <div className={styles.profile_nav}>
           <ProfileNavLink to={APP_ROUTES.PROFILE}>Профиль</ProfileNavLink>
-          <ProfileNavLink to="/profile/orders/1">История заказов</ProfileNavLink>
+          <ProfileNavLink to={APP_ROUTES.PROFILE_ORDER}>История заказов</ProfileNavLink>
           <span className={styles.profile_nav__logout_btn} onClick={onSignOut}>
             Выход
           </span>
@@ -43,7 +43,7 @@ export const ProfilePage: FC = () => {
           <Route path={APP_ROUTES.PROFILE} exact={true}>
             <ProfileUserForm />
           </Route>
-          <Route path={APP_ROUTES.PROFILE_ORDERS} exact={true}>
+          <Route path={APP_ROUTES.PROFILE_ORDER} exact={true}>
             <ProfileOrders />
           </Route>
         </Switch>
