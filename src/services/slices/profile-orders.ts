@@ -21,7 +21,7 @@ type UpdateOrdersActions = PayloadAction<{
   totalToday: number;
 }>;
 
-const profileOrderSlice = createSlice({
+export const profileOrderSlice = createSlice({
   name: 'profile-orders',
   initialState: initState,
   reducers: {
